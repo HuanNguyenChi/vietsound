@@ -30,7 +30,7 @@ public class User implements UserDetails {
     @Column(name = "email",unique = true)
     private String email;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
@@ -38,7 +38,7 @@ public class User implements UserDetails {
     )
     private List<Role> roles;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_album",
             joinColumns = @JoinColumn(name = "userId"),
@@ -46,7 +46,7 @@ public class User implements UserDetails {
     )
     private List<Album> albumList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_song",
             joinColumns = @JoinColumn(name = "userId"),
@@ -54,7 +54,7 @@ public class User implements UserDetails {
     )
     private List<Song> songLike;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_category",
             joinColumns = @JoinColumn(name = "userId"),
@@ -62,7 +62,7 @@ public class User implements UserDetails {
     )
     private List<Category> categoryLikeList;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_singer",
             joinColumns = @JoinColumn(name = "userId"),

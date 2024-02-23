@@ -25,26 +25,17 @@ public class VietsoundApplication {
 		SpringApplication.run(VietsoundApplication.class, args);
 	}
 
-	@Bean
-	BCryptPasswordEncoder bCryptPasswordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
-
 //	@Bean
 //	CommandLineRunner run(UserService userService, RoleService roleService){
 //		return args -> {
 //			roleService.saveRole(new Role(null,"ROLE_USER",new ArrayList<>()));
-//			roleService.saveRole(new Role(null,"ROLE_MANAGER",new ArrayList<>()));
 //			roleService.saveRole(new Role(null,"ROLE_ADMIN",new ArrayList<>()));
-//			roleService.saveRole(new Role(null,"ROLE_SUPER_ADMIN",new ArrayList<>()));
 //			userService.saveUser(new User(null,"huan01","12345678","check1@gmail.com",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"huan02","12345678","check2@gmail.com",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"huan03","12345678","check3@gmail.com",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()));
 //			userService.saveUser(new User(null,"huan04","12345678","check4@gmail.com",new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>(),new ArrayList<>()));
 //			userService.addToUser("huan01","ROLE_USER");
-//			userService.addToUser("huan01","ROLE_MANAGER");
 //			userService.addToUser("huan01","ROLE_ADMIN");
-//			userService.addToUser("huan01","ROLE_SUPER_ADMIN");
 //			userService.addToUser("huan02","ROLE_USER");
 //			userService.addToUser("huan03","ROLE_USER");
 //			userService.addToUser("huan04","ROLE_USER");

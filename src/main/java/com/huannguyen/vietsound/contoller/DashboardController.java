@@ -7,8 +7,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/admin")
 public class DashboardController {
-    @GetMapping("/dashboard")
-    public String dashboard(){
+
+    @GetMapping()
+    public String index(){
+        return "redirect:admin/";
+    }
+
+    @GetMapping("/")
+    public String admin() {
         return "dashboard";
+    }
+    @GetMapping("/check")
+    public String check() {
+        return "check";
     }
 }
