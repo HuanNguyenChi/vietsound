@@ -19,8 +19,13 @@ public class Singer {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "image")
+    private String image;
     @Column(name = "stage_name")
     private String stageName;
+
+    @Column(name = "debut")
+    private String debut;
 
     @Column(name = "story")
     private String story;

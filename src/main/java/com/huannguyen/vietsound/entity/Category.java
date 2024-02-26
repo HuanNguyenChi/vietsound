@@ -22,9 +22,14 @@ public class Category {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "popularity")
+    private String popularity;
+
     @OneToMany(mappedBy = "categoryOfSong")
     private List<Song> songInCategory;
 
     @ManyToMany(mappedBy = "categoryLikeList")
     private List<User> userLikedCategory;
+    @OneToMany(mappedBy = "categoryOfAlbum")
+    private List<Album> albumInCategory;
 }

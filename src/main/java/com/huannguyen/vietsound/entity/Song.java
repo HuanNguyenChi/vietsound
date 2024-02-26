@@ -28,6 +28,12 @@ public class Song {
     @Column(name = "link")
     private String link;
 
+    @Column(name = "content")
+    private String text;
+
+    @Column(name = "date_release")
+    private String dateRelease;
+
     @Column(name = "listens")
     private Integer listens;
 

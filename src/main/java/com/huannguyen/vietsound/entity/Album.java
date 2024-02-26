@@ -22,8 +22,15 @@ public class Album {
     @Column(name = "image")
     private String image;
 
+    @Column(name = "date_public")
+    private String datePublic;
+
     @OneToMany(mappedBy = "album")
     private List<Song> songInAlbum;
+
+    @ManyToOne
+    @JoinColumn(name = "category_of_album")
+    private Category categoryOfAlbum;
 
     @ManyToOne
     @JoinColumn(name = "singer_of_album")
