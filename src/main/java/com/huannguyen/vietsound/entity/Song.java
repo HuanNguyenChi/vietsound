@@ -29,7 +29,7 @@ public class Song {
     private String link;
 
     @Column(name = "content")
-    private String text;
+    private String content;
 
     @Column(name = "date_release")
     private String dateRelease;

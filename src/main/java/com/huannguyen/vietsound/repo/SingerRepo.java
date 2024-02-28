@@ -9,5 +9,6 @@ import java.util.List;
 @Repository
 public interface SingerRepo extends JpaRepository<Singer,Integer> {
     List<Singer> findAll();
+    Singer findById(int id);
 
 }

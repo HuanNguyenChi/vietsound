@@ -23,4 +23,9 @@ public class SongServiceImpl implements SongService {
     public List<Song> findAll() {
         return songRepo.findAll();
     }
+
+    @Override
+    public Song findById(int id) {
+        return songRepo.findById(id);
+    }
 }

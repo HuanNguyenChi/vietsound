@@ -35,7 +35,7 @@ public class HomeController {
     @Autowired
     private SongService songService;
 
-    @GetMapping("")
+    @GetMapping("/")
     public String home(Model model){
         List<Singer> singerList = singerService.findAll();
         List<Album> albumList = albumService.findAll();
@@ -61,5 +61,9 @@ public class HomeController {
         model.addAttribute("albumList",albumList);
         model.addAttribute("categoryList",categoryList);
         return "albumhome";
+    }
+    @GetMapping("/contact")
+    public String contact(){
+        return "contact";
     }
 }

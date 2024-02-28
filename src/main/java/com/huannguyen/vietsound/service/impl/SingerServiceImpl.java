@@ -24,4 +24,9 @@ public class SingerServiceImpl implements SingerService {
     public List<Singer> findAll() {
         return singerRepo.findAll();
     }
+
+    @Override
+    public Singer findById(int id) {
+        return singerRepo.findById(id);
+    }
 }
