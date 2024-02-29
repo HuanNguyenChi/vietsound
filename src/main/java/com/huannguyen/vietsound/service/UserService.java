@@ -6,4 +6,6 @@ public interface UserService {
     User saveUser(User user);
     void addToUser(String username, String rolename);
     User findByUsername(String username);
+    boolean existsUserByEmail(String email);
+    boolean existsUserByUsername(String username);
 }

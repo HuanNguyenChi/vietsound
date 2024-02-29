@@ -22,7 +22,7 @@ public class CustomUserDetailSevice implements UserDetailsService  {
     @Autowired
     private UserService userService;
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username)  {
         return loadUser(username);
     }
 

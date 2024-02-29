@@ -65,9 +65,10 @@ public class DetailController {
 //        Singer singer = singerService.findById(song.getSingerInSong().get(0).getId());
 //        List<Song> songOfSinger = singer.getSongOfSinger();
 //        List<Album> albumList = albumService.findBySingerOfAlbum(singer);
+        model.addAttribute("category",category);
         model.addAttribute("songList",category.getSongInCategory());
 //        model.addAttribute("singerOfCategory",category.get);
         model.addAttribute("albumInCategory",category.getAlbumInCategory());
-        return "songdetail";
+        return "categorydetail";
     }
 }

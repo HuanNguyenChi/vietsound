@@ -25,6 +25,9 @@ public class Category {
     @Column(name = "popularity")
     private String popularity;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToMany(mappedBy = "categoryOfSong")
     private List<Song> songInCategory;
 

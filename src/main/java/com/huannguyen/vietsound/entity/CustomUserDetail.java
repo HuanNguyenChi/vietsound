@@ -1,12 +1,13 @@
 package com.huannguyen.vietsound.entity;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-
+@Data
 public class CustomUserDetail implements UserDetails {
-    private User user;
+    User user;
     private Collection<? extends GrantedAuthority> authorities;
 
     public CustomUserDetail() {
