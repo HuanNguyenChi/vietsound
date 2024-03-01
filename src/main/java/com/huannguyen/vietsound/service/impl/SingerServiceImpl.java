@@ -2,7 +2,6 @@ package com.huannguyen.vietsound.service.impl;
 
 import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.repo.SingerRepo;
-import com.huannguyen.vietsound.repo.SongRepo;
 import com.huannguyen.vietsound.service.SingerService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;

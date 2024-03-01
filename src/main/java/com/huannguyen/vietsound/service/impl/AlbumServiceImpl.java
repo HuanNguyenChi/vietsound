@@ -5,8 +5,6 @@ import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.repo.AlbumRepo;
 import com.huannguyen.vietsound.service.AlbumService;
 import jakarta.transaction.Transactional;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

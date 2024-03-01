@@ -2,7 +2,6 @@ package com.huannguyen.vietsound.config;
 
 import com.huannguyen.vietsound.service.CustomUserDetailSevice;
 import com.huannguyen.vietsound.service.JWTSerive;
-import com.huannguyen.vietsound.service.UserService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,10 +37,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.isEmpty(authHeader) || !org.apache.commons.lang.StringUtils.startsWith(authHeader,"Bearer ")){
             filterChain.doFilter(request,response);
         }
-
         else if(authHeader != null && authHeader.startsWith("Bearer ")){
             jwt = authHeader.substring(7);
             username = jwtSerive.extractUsername(jwt);
+
             if(org.apache.commons.lang.StringUtils.isNotEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = customUserDetailSevice.loadUserByUsername(username);
 
