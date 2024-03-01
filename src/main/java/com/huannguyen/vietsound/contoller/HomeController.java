@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -34,7 +35,7 @@ public class HomeController {
     @Autowired
     private SongService songService;
 
-    @GetMapping("/")
+    @GetMapping()
     public String home(Model model){
         List<Singer> singerList = singerService.findAll();
         List<Album> albumList = albumService.findAll();
@@ -52,14 +53,14 @@ public class HomeController {
         model.addAttribute("categoryList",categoryList);
         return "index";
     }
-    @GetMapping("/album")
+    @GetMapping("album")
     public String getAllAlbum(Model model){
         List<Album> albumList = albumService.findAll();
 
         model.addAttribute("albumList",albumList);
         return "albumhome";
     }
-    @GetMapping("/tophit")
+    @GetMapping("tophit")
     public String tophit(Model model){
         List<Album> albumList = albumService.findAll();
         List<Category> categoryList = categoryService.findAll();
@@ -69,7 +70,7 @@ public class HomeController {
         model.addAttribute("categoryList",categoryList);
         return "tophit";
     }
-    @GetMapping("/contact")
+    @GetMapping("contact")
     public String contact(){
         return "contact";
     }

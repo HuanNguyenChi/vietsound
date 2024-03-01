@@ -16,6 +16,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -34,7 +35,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
+        http.csrf(AbstractHttpConfigurer :: disable)
                 .authorizeHttpRequests((auth) -> auth
                         .requestMatchers("/*", "/song/**", "/album/**", "/singer/**", "/category/**","/api/auth/**").permitAll()
                         .requestMatchers("/admin/**")
@@ -50,9 +51,7 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .defaultSuccessUrl("/", true))
                 .logout(logout -> (logout).permitAll()
-                        .logoutSuccessUrl("/"))
-
-        ;
+                        .logoutSuccessUrl("/"));
         return http.build();
     }
 

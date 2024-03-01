@@ -38,10 +38,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (StringUtils.isEmpty(authHeader) || !org.apache.commons.lang.StringUtils.startsWith(authHeader,"Bearer ")){
             filterChain.doFilter(request,response);
         }
-        if(authHeader != null && authHeader.startsWith("Bearer ")){
+
+        else if(authHeader != null && authHeader.startsWith("Bearer ")){
             jwt = authHeader.substring(7);
             username = jwtSerive.extractUsername(jwt);
-
             if(org.apache.commons.lang.StringUtils.isNotEmpty(username) && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = customUserDetailSevice.loadUserByUsername(username);
 
@@ -54,9 +54,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     SecurityContextHolder.setContext(securityContext);
                 }
             }
+            filterChain.doFilter(request,response);
         }
 
-        filterChain.doFilter(request,response);
+
     }
 
 }
