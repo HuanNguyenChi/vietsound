@@ -30,7 +30,8 @@
     </div>
 </div>
 
-<!-- ##### Header Area Start ##### -->
+
+<!-- ##### Nav start ##### -->
 <header class="header-area">
     <!-- Navbar Area -->
     <div class="oneMusic-main-menu">
@@ -40,11 +41,11 @@
                 <nav class="classy-navbar justify-content-between" id="oneMusicNav">
 
                     <!-- Nav brand -->
-                    <a href="index.html" class="nav-brand"><img th:src="@{img/core-img/logo.png}" alt=""></a>
+                    <a th:href="@{/}" class="nav-brand"><img th:src="@{/img/core-img/logo.png}"  alt=""></a>
 
                     <!-- Navbar Toggler -->
                     <div class="classy-navbar-toggler">
-                        <span class="navbarToggler"><span></span><span></span><span></span></span>
+                        <span class="navbarToggler"></span>
                     </div>
 
                     <!-- Menu -->
@@ -58,63 +59,43 @@
                         <!-- Nav Start -->
                         <div class="classynav">
                             <ul>
-                                <li><a href="index.html">Home</a></li>
-                                <li><a href="albums-store.html">Albums</a></li>
-                                <li><a href="#">Pages</a>
-                                    <ul class="dropdown">
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="albums-store.html">Albums</a></li>
-                                        <li><a href="event.html">Events</a></li>
-                                        <li><a href="blog.html">News</a></li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                        <li><a href="elements.html">Elements</a></li>
-                                        <li><a href="login.html">Login</a></li>
-                                        <li><a href="#">Dropdown</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                                <li><a href="#">Even Dropdown</a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                        <li><a href="#">Deeply Dropdown</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Even Dropdown</a></li>
-                                            </ul>
-                                        </li>
+                                <li><a th:href="@{/}" >Home</a></li>
+                                <li><a th:href="@{/album}">Albums</a></li>
+                                <li><a th:href="@{/category}">Category</a>
+                                    <ul class="dropdown" >
+                                        <div th:each = "category : ${categoryList}">
+                                            <li>
+                                                <a th:href="'/category/' + ${category.getId()}" th:text = "${category.getName()}" ></a>
+                                            </li>
+                                        </div>
+
                                     </ul>
                                 </li>
-                                <li><a href="event.html">Events</a></li>
-                                <li><a href="blog.html">News</a></li>
-                                <li><a href="contact.html">Contact</a></li>
+                                <li><a th:href="@{/tophit}">Top Hits</a></li>
+                                <li><a th:href="@{#}">News</a></li>
+                                <li><a th:href="@{/contact}">Contact</a></li>
                             </ul>
 
                             <!-- Login/Register & Cart Button -->
                             <div class="login-register-cart-button d-flex align-items-center">
                                 <!-- Login/Register -->
                                 <div class="login-register-btn mr-50">
-                                    <a href="login.html" id="loginBtn">Login / Register</a>
+                                    <a th:href="@{/login}" id="loginBtn">Login / Register</a>
                                 </div>
-
-                                <!-- Cart Button -->
-                                <div class="cart-btn">
-                                    <p><span class="icon-heart" ></span> </p>
+                                <!-- heart Button -->
+                                <div class="home-btn">
+                                    <p><span class="fa fa-home" ></span></p>
                                 </div>
                             </div>
                         </div>
                         <!-- Nav End -->
-
                     </div>
                 </nav>
             </div>
         </div>
     </div>
 </header>
-<!-- ##### Header Area End ##### -->
+<!-- ##### Nav End ##### -->
 
 <!-- ##### Breadcumb Area Start ##### -->
 <section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{img/bg-img/breadcumb3.jpg} +');'">

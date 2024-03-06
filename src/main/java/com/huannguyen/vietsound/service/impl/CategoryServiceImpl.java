@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +29,11 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public Category findById(int id) {
         return categoryRepo.findById(id);
+    }
+
+    @Override
+    public List<Category> findCategoriesLimit(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return categoryRepo.findCategoriesLimit(pageable);
     }
 }

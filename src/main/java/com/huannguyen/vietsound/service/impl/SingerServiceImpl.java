@@ -7,6 +7,8 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,5 +29,11 @@ public class SingerServiceImpl implements SingerService {
     @Override
     public Singer findById(int id) {
         return singerRepo.findById(id);
+    }
+
+    @Override
+    public List<Singer> findSingersLimit(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return singerRepo.findSingersLimit(pageable);
     }
 }

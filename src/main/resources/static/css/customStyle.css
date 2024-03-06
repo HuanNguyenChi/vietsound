@@ -1,3 +1,9 @@
 .icon-heart{
     color: #d04848;
 }
+.play-icon{
+    display: none;
+}
+.single-album-area:hover .play-icon{
+    display: block;
+}

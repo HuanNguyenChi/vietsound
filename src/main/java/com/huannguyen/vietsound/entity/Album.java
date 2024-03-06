@@ -28,6 +28,12 @@ public class Album {
     @Column(name = "date_public")
     private String datePublic;
 
+    @Column(name = "likes")
+    private Integer likes;
+
+    @Column(name = "dislikes")
+    private Integer dislikes;
+
     @OneToMany(mappedBy = "album")
     private List<Song> songInAlbum;
 

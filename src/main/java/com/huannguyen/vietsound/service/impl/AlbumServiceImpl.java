@@ -6,6 +6,8 @@ import com.huannguyen.vietsound.repo.AlbumRepo;
 import com.huannguyen.vietsound.service.AlbumService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,5 +31,11 @@ public class AlbumServiceImpl implements AlbumService {
     @Override
     public List<Album> findBySingerOfAlbum(Singer singer) {
         return albumRepo.findBySingerOfAlbum(singer);
+    }
+
+    @Override
+    public List<Album> findAlbumsLimit(int page, int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return albumRepo.findAlbumsLimit(pageable);
     }
 }

@@ -33,7 +33,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests((auth) -> auth
-                        .requestMatchers("/*", "/song/**", "/album/**", "/singer/**", "/category/**","/api/auth/**").permitAll()
+                        .requestMatchers("/*", "/song/**", "/album/**", "/singer/**", "/category/**","/api/**").permitAll()
                         .requestMatchers("/admin/**")
                         .hasAuthority("ROLE_ADMIN")
                         .anyRequest().authenticated())
@@ -47,9 +47,8 @@ public class SecurityConfig {
                         .passwordParameter("password")
                         .defaultSuccessUrl("/", true))
                 .logout(logout -> (logout).permitAll()
-                        .logoutSuccessUrl("/"))
+                        .logoutSuccessUrl("/"));
 
-        ;
         return http.build();
     }
 

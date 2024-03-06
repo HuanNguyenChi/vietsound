@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/")
 public class DetailController {
@@ -33,6 +35,8 @@ public class DetailController {
 //        Singer singer = singerService.findById(song.getSingerInSong().get(0).getId());
 //        List<Song> songOfSinger = singer.getSongOfSinger();
 //        List<Album> albumList = albumService.findBySingerOfAlbum(singer);
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categoryList",categoryList);
         model.addAttribute("song",song);
         model.addAttribute("singer",song.getSingerInSong().get(0));
         model.addAttribute("songOfSinger",song.getSingerInSong().get(0).getSongOfSinger());
@@ -42,6 +46,8 @@ public class DetailController {
     @GetMapping("/singer/{id}")
     public String getSingerById(Model model, @PathVariable("id") int id){
         Singer singer = singerService.findById(id);
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categoryList",categoryList);
         model.addAttribute("singer",singer);
         model.addAttribute("songOfSinger",singer.getSongOfSinger());
         model.addAttribute("albumList",singer.getAlbumList());
@@ -50,7 +56,8 @@ public class DetailController {
     @GetMapping("/album/{id}")
     public String getAlbumById(Model model, @PathVariable("id") int id){
         Album album = albumService.findById(id);
-
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categoryList",categoryList);
         model.addAttribute("songList",album.getSongInAlbum());
         model.addAttribute("singer",album.getSingerOfAlbum());
         model.addAttribute("albumDiff",album.getSingerOfAlbum().getAlbumList());
