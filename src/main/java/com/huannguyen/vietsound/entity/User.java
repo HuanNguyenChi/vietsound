@@ -1,6 +1,7 @@
 package com.huannguyen.vietsound.entity;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "user")
@@ -19,7 +21,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements UserDetails {
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,15 +35,25 @@ public class User implements UserDetails {
     @Column(name = "email",unique = true)
     private String email;
 
+    @Column(name = "phone",unique = true)
+    private String phone;
+
+    @Column(name = "address")
+    private String address;
+
+    @Column(name = "fullname")
+    private String fullname;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "roleId")
     )
+    @JsonIgnore
     private List<Role> roles;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_album",
             joinColumns = @JoinColumn(name = "userId"),
@@ -49,7 +61,7 @@ public class User implements UserDetails {
     )
     private List<Album> albumList;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_song",
             joinColumns = @JoinColumn(name = "userId"),
@@ -57,7 +69,7 @@ public class User implements UserDetails {
     )
     private List<Song> songLike;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_category",
             joinColumns = @JoinColumn(name = "userId"),
@@ -65,39 +77,11 @@ public class User implements UserDetails {
     )
     private List<Category> categoryLikeList;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "user_singer",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "singerId")
     )
     private List<Singer> singerList;
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        Collection<SimpleGrantedAuthority> simpleGrantedAuthorities = new ArrayList<>();
-        roles.stream().forEach(i->simpleGrantedAuthorities.add(new SimpleGrantedAuthority(i.getName())));
-        return List.of(new SimpleGrantedAuthority(simpleGrantedAuthorities.toString()));
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
 }

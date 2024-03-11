@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"   xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+</head>
+
+<body>
+
+<!-- ##### Nav start ##### -->
+    <header class="header-area">
+        <!-- Navbar Area -->
+        <div class="oneMusic-main-menu">
+            <div class="classy-nav-container breakpoint-off">
+                <div class="container">
+                    <!-- Menu -->
+                    <div class="classy-navbar justify-content-between" id="oneMusicNav">
+
+                        <!-- Nav brand -->
+                        <a th:href="@{/}" class="nav-brand"><img th:src="@{/img/core-img/logo.png}"  alt=""></a>
+
+                        <!-- Navbar Toggler -->
+                        <div class="classy-navbar-toggler">
+                            <span class="navbarToggler"></span>
+                        </div>
+
+                        <!-- Menu -->
+                        <div class="classy-menu">
+
+                            <!-- Close Button -->
+                            <div class="classycloseIcon">
+                                <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                            </div>
+
+                            <!-- Nav Start -->
+                            <div class="classynav">
+                                <ul >
+                                    <li><a th:href="@{/}" >Home</a></li>
+                                    <li><a th:href="@{/album}">Albums</a></li>
+                                    <li><a th:href="@{/category}">Category</a>
+                                        <ul class="dropdown" >
+                                            <div th:each = "category : ${categoryList}">
+                                                <li>
+                                                    <a th:href="'/category/' + ${category.getId()}" th:text = "${category.getName()}" ></a>
+                                                </li>
+                                            </div>
+
+                                        </ul>
+                                    </li>
+                                    <li><a th:href="@{/tophit}">Top Hits</a></li>
+                                    <li><a th:href="@{#}">News</a></li>
+                                    <li><a th:href="@{/contact}">Contact</a></li>
+                                </ul>
+
+                                <!-- Login/Register & Cart Button -->
+                                <div class="login-register-cart-button d-flex align-items-center" >
+                                    <!-- Login/Register -->
+                                    <div class="login-register-btn mr-50" >
+                                        <div th:if="${#request.userPrincipal}">
+                                            <a th:href="'/user/' + ${#authentication.getName()}" class="user-link">
+                                                <span sec:authentication="name"></span>
+                                                <span class="icon-home"></span>
+                                            </a>
+
+                                            <a th:href="@{/logout}" style="margin-left: 25px">Logout</a>
+                                        </div>
+<!--                                        <div sec:authentication="!isAuthenticated()">-->
+                                        <div th:if="!${#request.userPrincipal}">
+                                            <a th:href="@{/login}" id="loginBtn">Login / Register</a>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Nav End -->
+
+                    </div>
+<!--                    </nav>-->
+                </div>
+            </div>
+        </div>
+    </header>
+<!-- ##### Nav End ##### -->
+</body>
+</html>

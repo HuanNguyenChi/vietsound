@@ -27,7 +27,7 @@
 <section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{img/bg-img/breadcumb3.jpg} +');'">
     <div class="bradcumbContent">
         <p>See what’s new</p>
-        <h2>Login</h2>
+        <h2>Register</h2>
     </div>
 </section>
 <!-- ##### Breadcumb Area End ##### -->
@@ -41,25 +41,27 @@
                     <h3>Welcome Back</h3>
                     <!-- Login Form -->
                     <div class="login-form">
-                        <form th:action="@{/j_spring_security_check}" method="post" >
-<!--                        <form method="post">-->
+                        <form th:action="@{/register}" method="post" onsubmit="return validatePassword();">
                             <div class="form-group">
                                 <label for="exampleInputUsername">Your username</label>
                                 <input type="text" class="form-control" id="exampleInputUsername"  placeholder="Enter your username" name="username">
-                                <small id="email" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your username with anyone else.</small>
+                                <small id="username" class="form-text text-muted"><i class="fa fa-lock mr-2"></i>We'll never share your username with anyone else.</small>
                             </div>
                             <div class="form-group">
-                                <label for="exampleInputPassword1">Password</label>
+                                <label for="exampleInputPassword1">Your Password</label>
                                 <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" name="password">
                             </div>
-                            <div class="form-group form-check">
-                                <input type="checkbox" class="form-check-input" id="rememberMe" name="remember-me">
-                                <label class="form-check-label" for="rememberMe">Remember me</label>
+                            <div class="form-group">
+                                <label for="exampleInputPasswordRepeat">Repeat Password</label>
+                                <input type="password" class="form-control" id="exampleInputPasswordRepeat" placeholder="Password" name="passwordRepeat">
                             </div>
-                            <button id="btnLogin" type="submit" class="btn oneMusic-btn mt-30">Login</button>
+                            <div class="form-group">
+                                <label for="inputEmail">Your Email</label>
+                                <input type="email" class="form-control" id="inputEmail"  placeholder="Enter your username" name="email">
+                            </div>
+                            <button id="btn-register" type="submit" class="btn oneMusic-btn mt-30">Register</button>
                         </form>
                     </div>
-                    <p>Don't have an account? <a th:href="@{/register}">Register here</a>.</p>
                 </div>
             </div>
         </div>
@@ -81,6 +83,17 @@
 <!-- Active js -->
 <script th:src="@{/js/active.js}"></script>
 <script type="text/javascript" >
+    function validatePassword() {
+        var password1 = document.getElementById("exampleInputPassword1").value;
+        var password2 = document.getElementById("exampleInputPasswordRepeat").value;
+
+        if (password1 !== password2) {
+            alert("Mật khẩu không khớp. Vui lòng nhập lại.");
+            return false;
+        }
+
+        return true;
+    }
 </script>
 </body>
 

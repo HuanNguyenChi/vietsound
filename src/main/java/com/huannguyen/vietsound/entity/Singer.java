@@ -1,6 +1,6 @@
 package com.huannguyen.vietsound.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +32,9 @@ public class Singer {
 
     @Column(name = "story")
     private String story;
+
+    @Column(name = "name_model")
+    private final String nameModel = "SINGER";
 
     @OneToMany(mappedBy = "singerOfAlbum")
     private List<Album> albumList;

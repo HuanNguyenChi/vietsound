@@ -1,20 +1,18 @@
 package com.huannguyen.vietsound.contoller;
 
-import com.huannguyen.vietsound.entity.Album;
-import com.huannguyen.vietsound.entity.Category;
-import com.huannguyen.vietsound.entity.Singer;
-import com.huannguyen.vietsound.entity.Song;
-import com.huannguyen.vietsound.service.AlbumService;
-import com.huannguyen.vietsound.service.CategoryService;
-import com.huannguyen.vietsound.service.SingerService;
-import com.huannguyen.vietsound.service.SongService;
-import jakarta.servlet.http.HttpServletRequest;
+import com.huannguyen.vietsound.entity.*;
+import com.huannguyen.vietsound.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
 
@@ -35,35 +33,23 @@ public class HomeController {
     private SongService songService;
 
     @GetMapping("/")
-    public String home(Model model, Principal principal,HttpServletRequest request){
+    public String home(Model model, HttpSession session){
         List<Singer> singerList = singerService.findAll();
         List<Singer> singerListLimit = singerService.findSingersLimit(0,4);
         List<Album> albumList = albumService.findAlbumsLimit(0,4);
         List<Song> songList = songService.findSongsLimit(0,12);
         List<Song> songListLimit = songService.findSongsLimit(0,4);
         List<Category> categoryList = categoryService.findAll();
-
-//        try{
-//            String check = request.getUserPrincipal().getName();
-//            System.out.println(check);
-////            String username = principal.getName();
-////            System.out.println(username);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-
-//        String jwt = request.getParameter("token",);
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("singerList",singerList);
         model.addAttribute("singerListLimit",singerListLimit);
         model.addAttribute("albumList",albumList);
         model.addAttribute("songList",songList);
         model.addAttribute("songListLimit",songListLimit);
-
         return "index";
     }
     @GetMapping("/album")
-    public String getAllAlbum(Model model){
+    public String getAllAlbum(Model model, Principal principal){
         List<Album> albumList = albumService.findAll();
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
@@ -79,9 +65,8 @@ public class HomeController {
         return "songhome";
     }
     @GetMapping("/category")
-    public String getAllCategory(Model model){
+    public String getAllCategory(Model model,Principal principal){
         List<Category> categoryList = categoryService.findAll();
-
         model.addAttribute("categoryList",categoryList);
         return "categoryhome";
     }
@@ -103,4 +88,5 @@ public class HomeController {
         model.addAttribute("categoryList",categoryList);
         return "contact";
     }
+
 }

@@ -2,7 +2,6 @@ package com.huannguyen.vietsound.service;
 
 import com.huannguyen.vietsound.entity.Album;
 import com.huannguyen.vietsound.entity.Singer;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 

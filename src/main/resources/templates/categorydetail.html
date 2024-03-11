@@ -21,82 +21,8 @@
 </head>
 
 <body>
-<!-- Preloader -->
-<div class="preloader d-flex align-items-center justify-content-center">
-    <div class="lds-ellipsis">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-    </div>
-</div>
-
-<!-- ##### Nav start ##### -->
-<header class="header-area">
-    <!-- Navbar Area -->
-    <div class="oneMusic-main-menu">
-        <div class="classy-nav-container breakpoint-off">
-            <div class="container">
-                <!-- Menu -->
-                <nav class="classy-navbar justify-content-between" id="oneMusicNav">
-
-                    <!-- Nav brand -->
-                    <a th:href="@{/}" class="nav-brand"><img th:src="@{/img/core-img/logo.png}"  alt=""></a>
-
-                    <!-- Navbar Toggler -->
-                    <div class="classy-navbar-toggler">
-                        <span class="navbarToggler"></span>
-                    </div>
-
-                    <!-- Menu -->
-                    <div class="classy-menu">
-
-                        <!-- Close Button -->
-                        <div class="classycloseIcon">
-                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
-                        </div>
-
-                        <!-- Nav Start -->
-                        <div class="classynav">
-                            <ul>
-                                <li><a th:href="@{/}" >Home</a></li>
-                                <li><a th:href="@{/album}">Albums</a></li>
-                                <li><a th:href="@{/category}">Category</a>
-                                    <ul class="dropdown" >
-                                        <div th:each = "category : ${category}">
-                                            <li>
-                                                <a th:href="'/category/' + ${category.getId()}" th:text = "${category.getName()}" ></a>
-                                            </li>
-                                        </div>
-
-                                    </ul>
-                                </li>
-                                <li><a th:href="@{/tophit}">Top Hits</a></li>
-                                <li><a th:href="@{#}">News</a></li>
-                                <li><a th:href="@{/contact}">Contact</a></li>
-                            </ul>
-
-                            <!-- Login/Register & Cart Button -->
-                            <div class="login-register-cart-button d-flex align-items-center">
-                                <!-- Login/Register -->
-                                <div class="login-register-btn mr-50">
-                                    <a th:href="@{/login}" id="loginBtn">Login / Register</a>
-                                </div>
-                                <!-- heart Button -->
-                                <div class="home-btn">
-                                    <p><span class="fa fa-home" ></span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Nav End -->
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
-</header>
-<!-- ##### Nav End ##### -->
-
+<!-- Header -->
+<div th:replace="/fragments/header :: header"/>
 <!-- ##### Breadcumb Area Start ##### -->
 <section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{/img/bg-img/breadcumb3.jpg} + ');'">
     <div class="bradcumbContent">
@@ -168,6 +94,7 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <!-- ##### Buy Now Area End ##### -->
 <!-- ##### Buy Now Area Start ##### -->
@@ -208,35 +135,11 @@
                 </div>
             </div>
         </div>
+    </div>
 </section>
 <!-- ##### Buy Now Area End ##### -->
-
-<!-- ##### Footer Area Start ##### -->
-<footer class="footer-area">
-    <div class="container">
-        <div class="row d-flex flex-wrap align-items-center">
-            <div class="col-12 col-md-6">
-                <a href="#"><img src="img/core-img/logo.png" alt=""></a>
-                <p class="copywrite-text"><a href="#"><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-                    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-                    <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p>
-            </div>
-
-            <div class="col-12 col-md-6">
-                <div class="footer-nav">
-                    <ul>
-                        <li><a th:href="@{/}">Home</a></li>
-                        <li><a href="#">Albums</a></li>
-                        <li><a href="#">Events</a></li>
-                        <li><a href="#">News</a></li>
-                        <li><a href="#">Contact</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</footer>
-<!-- ##### Footer Area Start ##### -->
+<!--footer-->
+<div th:replace="/fragments/footer :: footer"/>
 
 <!-- jQuery-2.2.4 js -->
 <script th:src="@{/js/jquery/jquery-2.2.4.min.js}"></script>

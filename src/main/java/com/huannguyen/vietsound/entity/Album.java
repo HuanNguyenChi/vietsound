@@ -1,6 +1,6 @@
 package com.huannguyen.vietsound.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +33,9 @@ public class Album {
 
     @Column(name = "dislikes")
     private Integer dislikes;
+
+    @Column(name = "name_model")
+    private final String nameModel = "ALBUM";
 
     @OneToMany(mappedBy = "album")
     private List<Song> songInAlbum;

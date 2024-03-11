@@ -1,6 +1,6 @@
 package com.huannguyen.vietsound.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,6 +43,8 @@ public class Song {
     @Column(name = "dislike")
     private Integer dislikes;
 
+    @Column(name = "name_model")
+    private final String nameModel = "SONG";
     @ManyToOne
     @JoinColumn(name = "category")
     private Category categoryOfSong;

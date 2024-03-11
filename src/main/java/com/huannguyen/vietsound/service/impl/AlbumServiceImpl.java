@@ -4,7 +4,6 @@ import com.huannguyen.vietsound.entity.Album;
 import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.repo.AlbumRepo;
 import com.huannguyen.vietsound.service.AlbumService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-@Transactional
 public class AlbumServiceImpl implements AlbumService {
     @Autowired
     private AlbumRepo albumRepo;

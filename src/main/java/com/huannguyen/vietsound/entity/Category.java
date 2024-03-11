@@ -1,6 +1,6 @@
 package com.huannguyen.vietsound.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,11 +31,15 @@ public class Category {
     @Column(name = "description")
     private String description;
 
+    @Column(name = "name_model")
+    private final String nameModel = "CATEGORY";
+
     @OneToMany(mappedBy = "categoryOfSong")
     private List<Song> songInCategory;
 
     @ManyToMany(mappedBy = "categoryLikeList")
     private List<User> userLikedCategory;
+
     @OneToMany(mappedBy = "categoryOfAlbum")
     private List<Album> albumInCategory;
 }
