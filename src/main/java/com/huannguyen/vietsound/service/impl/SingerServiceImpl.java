@@ -34,4 +34,15 @@ public class SingerServiceImpl implements SingerService {
         Pageable pageable = PageRequest.of(page,size);
         return singerRepo.findSingersLimit(pageable);
     }
+
+    @Override
+    public void delete(int id) {
+        singerRepo.deleteById(id);
+    }
+
+    @Override
+    public Singer save(Singer singer) {
+        return singerRepo.save(singer);
+    }
+
 }

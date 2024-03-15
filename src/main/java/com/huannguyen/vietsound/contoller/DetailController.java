@@ -35,10 +35,10 @@ public class DetailController {
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("song",song);
-        model.addAttribute("singer",song.getSingerInSong().get(0));
-        model.addAttribute("songOfSinger",song.getSingerInSong().get(0).getSongOfSinger());
-        model.addAttribute("albumList",song.getSingerInSong().get(0).getAlbumList());
-        return "songdetail";
+        model.addAttribute("singer",song.getSingerOfSong());
+        model.addAttribute("songOfSinger",song.getSingerOfSong().getSongList());
+        model.addAttribute("albumList",song.getSingerOfSong().getAlbumList());
+        return "user/songdetail";
     }
     @GetMapping("/singer/{id}")
     public String getSingerById(Model model, @PathVariable("id") int id){
@@ -46,9 +46,9 @@ public class DetailController {
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("singer",singer);
-        model.addAttribute("songOfSinger",singer.getSongOfSinger());
+        model.addAttribute("songOfSinger",singer.getSongList());
         model.addAttribute("albumList",singer.getAlbumList());
-        return "singerdetail";
+        return "user/singerdetail";
     }
     @GetMapping("/album/{id}")
     public String getAlbumById(Model model, @PathVariable("id") int id){
@@ -59,7 +59,7 @@ public class DetailController {
         model.addAttribute("singer",album.getSingerOfAlbum());
         model.addAttribute("albumDiff",album.getSingerOfAlbum().getAlbumList());
 
-        return "albumdetail";
+        return "user/albumdetail";
     }
     @GetMapping("/category/{id}")
     public String getCategoryById(Model model, @PathVariable("id") int id){
@@ -71,6 +71,6 @@ public class DetailController {
         model.addAttribute("songList",category.getSongInCategory());
 //        model.addAttribute("singerOfCategory",category.get);
         model.addAttribute("albumInCategory",category.getAlbumInCategory());
-        return "categorydetail";
+        return "user/categorydetail";
     }
 }

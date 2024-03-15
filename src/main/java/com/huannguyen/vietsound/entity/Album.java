@@ -48,6 +48,6 @@ public class Album {
     @JoinColumn(name = "singer_of_album")
     private Singer singerOfAlbum;
 
-    @ManyToMany(mappedBy = "albumList")
+    @ManyToMany(mappedBy = "albumList",cascade = CascadeType.ALL)
     private List<User> userLikedAlbum;
 }

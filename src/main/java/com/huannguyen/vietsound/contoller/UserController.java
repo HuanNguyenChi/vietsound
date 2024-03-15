@@ -38,7 +38,7 @@ public class UserController {
             e.printStackTrace();
         }
 
-        return "userhome";
+        return "user/userhome";
     }
 
     @GetMapping("/updateinfo/{username}")
@@ -47,7 +47,7 @@ public class UserController {
         model.addAttribute("user",user);
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
-        return "userupdateinfo";
+        return "user/userupdateinfo";
     }
 }
 

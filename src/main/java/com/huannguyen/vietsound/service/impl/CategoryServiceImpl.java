@@ -34,4 +34,15 @@ public class CategoryServiceImpl implements CategoryService {
         Pageable pageable = PageRequest.of(page,size);
         return categoryRepo.findCategoriesLimit(pageable);
     }
+
+    @Override
+    public void delete(int id) {
+        categoryRepo.deleteById(id);
+    }
+
+    @Override
+    public Category save(Category category) {
+        return categoryRepo.save(category);
+    }
+
 }

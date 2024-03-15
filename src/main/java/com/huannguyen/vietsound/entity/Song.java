@@ -53,9 +53,13 @@ public class Song {
     @JoinColumn(name = "album")
     private Album album;
 
-    @ManyToMany(mappedBy = "songOfSinger")
-    private List<Singer> singerInSong;
+//    @ManyToMany(mappedBy = "songOfSinger")
+//    private List<Singer> singerInSong;
 
-    @ManyToMany(mappedBy = "songLike")
+    @ManyToOne
+    @JoinColumn(name = "singer_of_song")
+    private Singer singerOfSong;
+
+    @ManyToMany(mappedBy = "songLike",cascade = CascadeType.ALL)
     private List<User> userLikedSong;
 }

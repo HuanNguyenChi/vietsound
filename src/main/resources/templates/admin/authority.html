@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"   xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Title -->
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>VietSound Admin</title>
+    <!-- Favicon -->
+    <link rel="icon" th:href= "@{/img/core-img/favicon.ico}">
+    <!-- Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css} ">
+    <link rel="stylesheet" th:href="@{/admin/assets/css/customCssAdmin.css}">
+    <!-- plugins:css -->
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/feather/feather.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/ti-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/typicons/typicons.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/simple-line-icons/css/simple-line-icons.css}">
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/css/vendor.bundle.base.css}">
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <link rel="stylesheet" th:href="@{/admin/assets/vendors/datatables.net-bs4/dataTables.bootstrap4.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/admin/assets/js/select.dataTables.min.css}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" th:href="@{/admin/assets/css/vertical-layout-light/style.css}">
+</head>
+<body>
+<!-- Header -->
+<div th:replace="/admin/fragments-admin/header :: header" />
+<div th:replace="/admin/fragments-admin/menu :: menu"></div>
+<!-- partial -->
+<div class="content-dashboard" >
+    <div class="container" style="margin: 50px;padding: 50px">
+        <div class="row" >
+            <h2>Update Song Here</h2>
+            <div class="container">
+                <div class="row">
+                    <!--table Song Hit-->
+                    <div>
+                        <table class="table table-responsive-lg table-bordered" style="width: 100%">
+                            <thead>
+                            <tr>
+                                <td>ID</td>
+                                <td>Username</td>
+                                <td>Email</td>
+                                <td>Role User</td>
+                                <td>Role Admin</td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <div th:each="user : ${userList}">
+                                <tr>
+                                    <td th:text="${user.getId()}" class="data-id-user" th:value="${user.getId()}"></td>
+                                    <td th:text="${user.getUsername()}"></td>
+                                    <td th:text="${user.getEmail()}"></td>
+                                    <td>
+                                        <!-- Hộp kiểm cho Role User -->
+                                        <input type="checkbox" class="role-checkbox" value="ROLE_USER" th:checked="${user.hasRole('ROLE_USER')}" >
+                                    </td>
+                                    <td>
+                                        <!-- Hộp kiểm cho Role Admin -->
+                                        <input type="checkbox" class="role-checkbox" value="ROLE_ADMIN" th:checked="${user.hasRole('ROLE_ADMIN')}">
+                                    </td>
+                                    <td style="padding-right: 0px; margin-right: 0px">
+                                        <span type="button" class="btn-delete-user">
+                                        <i class="fa fa-trash" style="margin-left: 10px"></i>
+                                    </span>
+                                    </td>
+                                </tr>
+                            </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--    </section>-->
+</div>
+
+<!-- ##### All Javascript Script ##### -->
+<!-- plugins:js -->
+<script th:src="@{/admin/assets/vendors/js/vendor.bundle.base.js}"></script>
+<script th:src="@{/admin/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page -->
+<script th:src="@{/admin/assets/vendors/chart.js/Chart.min.js}"></script>
+<script th:src="@{/admin/assets/vendors/progressbar.js/progressbar.min.js}"></script>
+<!-- End plugin js for this page -->
+<!-- inject:js -->
+<script th:src="@{/admin/assets/js/off-canvas.js}"></script>
+<script th:src="@{/admin/assets/js/hoverable-collapse.js}"></script>
+<script th:src="@{/admin/assets/js/template.js}"></script>
+<script th:src="@{/admin/assets/js/settings.js}"></script>
+<script th:src="@{/admin/assets/js/todolist.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<script th:src="@{/admin/assets/js/jquery.cookie.js}" type="text/javascript"></script>
+<script th:src="@{/admin/assets/js/dashboard.js}"></script>
+<script th:src="@{/admin/assets/js/proBanner.js}"></script>
+<!-- <script src="../../assets/js/Chart.roundedBarCharts.js"></script> -->
+<!-- End custom js for this page-->
+
+<!-- jQuery-2.2.4 js -->
+<script th:src="@{/js/jquery/jquery-2.2.4.min.js}"></script>
+<!-- Popper js -->
+<script th:src="@{/js/bootstrap/popper.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<!-- All Plugins js -->
+<script th:src="@{/js/plugins/plugins.js}"></script>
+<!-- Active js -->
+<script th:src="@{/js/active.js}"></script>
+<!--custom js-->
+<script th:src="@{/js/customjs.js}"></script>
+<script>
+    $(document).ready(function () {
+        // Bắt sự kiện click cho mỗi checkbox có class 'role-checkbox'
+        $('.role-checkbox').click(function () {
+            // Lấy giá trị checked của checkbox
+            var id = $(this).closest('tr').find('.data-id-user').text();
+            var role = $(this).val()
+            var isChecked = $(this).prop('checked');
+            // Thực hiện các hành động bạn muốn khi checkbox được nhấp
+            $.ajax({
+                url : "/api/updateroleforuser",
+                type : "get",
+                data : {
+                    id : id,
+                    role : role,
+                    isChecked : isChecked,
+                },
+                success : function (value){
+                    alert(value);
+                }
+            })
+        });
+        $('.btn-delete-user').click(function (){
+            var id = $(this).closest('tr').find('.data-id-user').text();
+            $.ajax({
+                url : "/api/deleteuser",
+                type : "get",
+                data : {
+                    id : id,
+                },
+                success : function (value){
+                    alert(value);
+                }
+            })
+        })
+    });
+</script>
+</body>
+
+</html>

@@ -37,7 +37,7 @@ public class Category {
     @OneToMany(mappedBy = "categoryOfSong")
     private List<Song> songInCategory;
 
-    @ManyToMany(mappedBy = "categoryLikeList")
+    @ManyToMany(mappedBy = "categoryLikeList",cascade = CascadeType.ALL)
     private List<User> userLikedCategory;
 
     @OneToMany(mappedBy = "categoryOfAlbum")

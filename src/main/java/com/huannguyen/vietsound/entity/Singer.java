@@ -24,6 +24,7 @@ public class Singer {
 
     @Column(name = "image")
     private String image;
+
     @Column(name = "stage_name")
     private String stageName;
 
@@ -39,14 +40,17 @@ public class Singer {
     @OneToMany(mappedBy = "singerOfAlbum")
     private List<Album> albumList;
 
-    @ManyToMany
-    @JoinTable(
-            name = "singer_song",
-            joinColumns = @JoinColumn(name = "singerId"),
-            inverseJoinColumns = @JoinColumn(name = "songId")
-    )
-    private List<Song> songOfSinger;
+    @OneToMany(mappedBy = "singerOfSong")
+    private List<Song> songList;
 
-    @ManyToMany(mappedBy = "singerList")
+//    @ManyToMany
+//    @JoinTable(
+//            name = "singer_song",
+//            joinColumns = @JoinColumn(name = "singerId"),
+//            inverseJoinColumns = @JoinColumn(name = "songId")
+//    )
+//    private List<Song> songOfSinger;
+
+    @ManyToMany(mappedBy = "singerList",cascade = CascadeType.ALL)
     private List<User> userLikedSinger;
 }

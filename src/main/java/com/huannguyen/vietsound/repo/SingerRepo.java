@@ -16,4 +16,5 @@ public interface SingerRepo extends JpaRepository<Singer, Integer> {
 
     @Query("select si from Singer si")
     List<Singer> findSingersLimit(Pageable pageable);
+    void deleteById(int id);
 }

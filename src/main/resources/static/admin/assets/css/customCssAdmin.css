@@ -1,0 +1,28 @@
+.header-area {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Đảm bảo nó nằm trên các phần tử khác */
+    background-color: black; /* Điều chỉnh màu nền theo cần thiết */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Tùy chọn: Thêm hiệu ứng bóng đổ */
+}
+
+/* Tùy chọn: Điều chỉnh padding/margin của nội dung dưới header cố định */
+body {
+    padding-top: 80px; /* Điều chỉnh theo cần thiết dựa trên chiều cao của header cố định */
+}
+/* Thanh bên cố định */
+.sidebar {
+    position: fixed;
+    height: 100%;
+    width: 250px; /* Đặt chiều rộng mong muốn của bạn */
+    background-color: #333; /* Đặt màu nền mong muốn */
+    overflow-y: auto; /* Bật cuộn dọc */
+    top: 80px; /* Điều chỉnh vị trí trên dựa trên chiều cao của tiêu đề của bạn */
+}
+
+/* Điều chỉnh nội dung chính sang bên phải của thanh bên */
+.content-dashboard {
+    margin-left: 250px; /* Đặt cùng chiều rộng như thanh bên */
+    padding: 20px; /* Thêm một số lề cho nội dung */
+}

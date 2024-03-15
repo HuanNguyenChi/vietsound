@@ -12,4 +12,6 @@ public interface SingerService {
     Singer findById(int id);
 
     List<Singer> findSingersLimit(int page, int size);
+    void delete(int id);
+    Singer save(Singer singer);
 }

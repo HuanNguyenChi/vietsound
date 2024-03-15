@@ -3,15 +3,11 @@ package com.huannguyen.vietsound.contoller;
 import com.huannguyen.vietsound.entity.*;
 import com.huannguyen.vietsound.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
 import java.util.List;
@@ -46,7 +42,7 @@ public class HomeController {
         model.addAttribute("albumList",albumList);
         model.addAttribute("songList",songList);
         model.addAttribute("songListLimit",songListLimit);
-        return "index";
+        return "user/index";
     }
     @GetMapping("/album")
     public String getAllAlbum(Model model, Principal principal){
@@ -54,7 +50,7 @@ public class HomeController {
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("albumList",albumList);
-        return "albumhome";
+        return "user/albumhome";
     }
     @GetMapping("/song")
     public String getAllSong(Model model){
@@ -62,13 +58,13 @@ public class HomeController {
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("songList",songList);
-        return "songhome";
+        return "user/songhome";
     }
     @GetMapping("/category")
     public String getAllCategory(Model model,Principal principal){
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
-        return "categoryhome";
+        return "user/categoryhome";
     }
     @GetMapping("/tophit")
     public String tophit(Model model){
@@ -79,14 +75,14 @@ public class HomeController {
         model.addAttribute("songList",songList);
         model.addAttribute("albumList",albumList);
         model.addAttribute("categoryList",categoryList);
-        return "tophit";
+        return "user/tophit";
     }
     @GetMapping("/contact")
     public String contact(Model model){
 
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
-        return "contact";
+        return "user/contact";
     }
 
 }

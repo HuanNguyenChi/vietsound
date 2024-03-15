@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"   xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+
+    <!-- Title -->
+    <title>One Music - Modern Music HTML5 Template</title>
+
+    <!-- Favicon -->
+    <link rel="icon" th:href= "@{/img/core-img/favicon.ico}">
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" th:href="@{/css/style.css} ">
+    <link rel="stylesheet" th:href="@{/css/customStyle.css}">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+<!-- Header -->
+<div th:replace="/fragments/header :: header"/>
+<!-- ##### Breadcumb Area Start ##### -->
+<section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{/img/bg-img/breadcumb.jpg} + ');'">
+    <div class="bradcumbContent">
+        <p>See Information</p>
+        <h2>Favorites</h2>
+    </div>
+</section>
+<!-- ##### Breadcumb Area End ##### -->
+
+<!-- ##### Contact Area Start ##### -->
+<section class="contact-area section-padding-100-0">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-12 col-lg-3">
+                <div class="contact-content mb-100">
+                    <!-- Title -->
+                    <div class="contact-title mb-50">
+                        <h5>User Info</h5>
+                    </div>
+                    <hr>
+                    <!-- Single Contact Info -->
+                    <div class="single-contact-info d-flex align-items-center">
+                        <div class="icon mr-30">
+                            <span class="icon-placeholder"></span>
+                        </div>
+                        <p th:text="${user.getUsername()}"></p>
+                    </div>
+
+                    <!-- Single Contact Info -->
+                    <div class="single-contact-info d-flex align-items-center">
+                        <div class="icon mr-30">
+                            <span class="icon-smartphone"></span>
+                        </div>
+                        <p th:text="${user.getPhone()}"></p>
+                    </div>
+
+                    <!-- Single Contact Info -->
+                    <div class="single-contact-info d-flex align-items-center">
+                        <div class="icon mr-30">
+                            <span class="icon-mail"></span>
+                        </div>
+                        <p th:text="${user.getEmail()}"></p>
+                    </div>
+
+                    <!-- Contact Social Info -->
+                    <div class="contact-social-info mt-50">
+                        <a th:href="@{#}" data-toggle="tooltip" data-placement="top" title="Pinterest"><i class="fa fa-pinterest" aria-hidden="true"></i></a>
+                        <a th:href="@{#}" data-toggle="tooltip" data-placement="top" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                        <a th:href="@{#}" data-toggle="tooltip" data-placement="top" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                        <a th:href="@{#}" data-toggle="tooltip" data-placement="top" title="Linkedin"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                    </div>
+                    <br>
+                    <div class="btn btn-light"> <a th:href="'/user/updateinfo/' + ${user.getUsername()}">Chỉnh sửa thông tin</a></div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-9">
+                <div>
+                    <!-- Tab items -->
+                    <div class="tabs">
+                        <div class="tab-item active">
+                            <i class="tab-icon fas fa-music"></i>
+                            Favorites Song
+                        </div>
+                        <div class="tab-item">
+                            <i class="tab-icon fas fa-heart"></i>
+                            Singer
+                        </div>
+                        <div class="tab-item">
+                            <i class="tab-icon fas fa-book"></i>
+                            Album
+                        </div>
+                        <div class="tab-item">
+                            <i class="tab-icon fas fa-bookmark"></i>
+                            Category
+                        </div>
+                        <div class="line"></div>
+                    </div>
+
+                    <!-- Tab content -->
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            <h2>Favorites Song</h2>
+                            <div th:if="${songList == null}" >
+                                <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any songs</h4>
+                            </div>
+                            <div th:if="${songList != null}">
+
+                                <div th:each="song : ${songList}">
+                                    <div class="featured-artist-content" style="margin-top: 10px">
+                                        <div class="song-play-area" style="background: #e8d7d7">
+                                            <div style="display: inline-block; margin-bottom: 10px">
+                                                <img th:src="'/img/bg-img/' + ${song.getImage()}" alt="song-img" width="65px" height="auto">
+                                            </div>
+                                            <div class="song-name" style="margin-left: 30px; display: inline-block">
+                                                <p th:text="${song.getName()} + ' - ' + ${song.getSingerOfSong().getStageName()}" style="color: black"></p>
+                                            </div>
+                                            <audio preload="auto" controls>
+                                                <source th:src="'/audio/' + ${song.getLink()}">
+                                            </audio>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px">
+                                    <div class="col-12">
+                                        <div class="load-more-btn text-center wow fadeInUp"  data-wow-delay="300ms">
+                                            <a th:href="@{#}" data-page="1" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane">
+                            <h2>Singer</h2>
+                            <div th:if="${singerList == null}" >
+                                <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any singers</h4>
+                            </div>
+                            <div th:if="${singerList != null}">
+                                <!-- Song List -->
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each = "singer : ${singerList}">
+                                        <a th:href="'/singer/' + ${singer.getId()}">
+                                            <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                                                <div class="album-thumb">
+                                                    <img th:src=" '/img/bg-img/' + ${singer.getImage()}" alt="img-category">
+                                                    <div class="play-icon">
+                                                        <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                                                    </div>
+                                                </div>
+                                                <div class="album-info">
+                                                    <h5 th:text = "${singer.getStageName()}"></h5>
+                                                    <p th:text = " ${singer.getName()}"></p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px">
+                                    <div class="col-12">
+                                        <div class="load-more-btn text-center wow fadeInUp"  data-wow-delay="300ms">
+                                            <a th:href="@{#}" data-page="1" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane">
+                            <h2>Album</h2>
+                            <div th:if="${albumList == null}" >
+                                <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any albums</h4>
+                            </div>
+                            <div th:if="${albumList != null}">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-4" th:each = "album : ${albumList}">
+                                        <a th:href="'/album/' + ${album.getId()}">
+                                            <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                                                <div class="album-thumb">
+                                                    <img th:src=" '/img/bg-img/' + ${album.getImage()}" alt="img-category">
+                                                    <div class="play-icon">
+                                                        <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                                                    </div>
+                                                </div>
+                                                <div class="album-info">
+                                                    <h5 th:text = "${album.getName()}"></h5>
+                                                    <p th:text = " ${album.getSingerOfAlbum().getStageName()}"></p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px">
+                                    <div class="col-12">
+                                        <div class="load-more-btn text-center wow fadeInUp"  data-wow-delay="300ms">
+                                            <a th:href="@{#}" data-page="1" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="tab-pane">
+                            <h2>Category</h2>
+                            <div th:if="${categoryList == null}" >
+                                <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any songs</h4>
+                            </div>
+                            <div th:if="${categoryList != null}">
+                                <div class="row">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each = "category : ${categoryList}">
+                                        <a th:href="'/category/' + ${category.getId()}">
+                                            <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
+                                                <div class="album-thumb">
+                                                    <img th:src=" '/img/bg-img/' + ${category.getImage()}" alt="img-category">
+                                                    <div class="play-icon">
+                                                        <a href="#" class="video--play--btn"><span class="icon-play-button"></span></a>
+                                                    </div>
+                                                </div>
+                                                <div class="album-info">
+                                                    <h5 th:text = "${category.getName()}"></h5>
+                                                    <!--                                                <p th:text = " ${album.getSingerOfAlbum()}"></p>-->
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 30px">
+                                    <div class="col-12">
+                                        <div class="load-more-btn text-center wow fadeInUp"  data-wow-delay="300ms">
+                                            <a th:href="@{#}" data-page="1" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ##### Contact Area End ##### -->
+
+<!--footer-->
+<!--footer-->
+<div th:replace="/fragments/footer :: footer"/>
+
+<!-- ##### All Javascript Script ##### -->
+<!-- jQuery-2.2.4 js -->
+<script th:src="@{/js/jquery/jquery-2.2.4.min.js}"></script>
+<!-- Popper js -->
+<script th:src="@{/js/bootstrap/popper.min.js}"></script>
+<!-- Bootstrap js -->
+<script th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+<!-- All Plugins js -->
+<script th:src="@{/js/plugins/plugins.js}"></script>
+<!-- Active js -->
+<script th:src="@{/js/active.js}"></script>
+<!--custom js-->
+<script th:src="@{/js/customjs.js}"></script>
+<script>
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
+
+    const tabs = $$(".tab-item");
+    const panes = $$(".tab-pane");
+
+    const tabActive = $(".tab-item.active");
+    const line = $(".tabs .line");
+
+    requestIdleCallback(function () {
+        line.style.left = tabActive.offsetLeft + "px";
+        line.style.width = tabActive.offsetWidth + "px";
+    });
+
+    tabs.forEach((tab, index) => {
+        const pane = panes[index];
+
+        tab.onclick = function () {
+            $(".tab-item.active").classList.remove("active");
+            $(".tab-pane.active").classList.remove("active");
+
+            line.style.left = this.offsetLeft + "px";
+            line.style.width = this.offsetWidth + "px";
+
+            this.classList.add("active");
+            pane.classList.add("active");
+        };
+    });
+
+
+</script>
+</body>
+
+</html>

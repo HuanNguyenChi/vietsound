@@ -23,9 +23,9 @@
                             <span class="navbarToggler"></span>
                         </div>
 
+
                         <!-- Menu -->
                         <div class="classy-menu">
-
                             <!-- Close Button -->
                             <div class="classycloseIcon">
                                 <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
@@ -60,15 +60,15 @@
                                                 <span sec:authentication="name"></span>
                                                 <span class="icon-home"></span>
                                             </a>
-
-                                            <a th:href="@{/logout}" style="margin-left: 25px">Logout</a>
+                                            <a th:href="@{/logout}" style="margin-left: 25px;display: inline-block">Logout</a>
+                                            <div th:if="${#request.isUserInRole('ROLE_ADMIN')}" style="display: inline-block;margin-left: 25px">
+                                                <a th:href="@{/admin}">Dashboard <i class="fa fa-angle-double-right"></i></a>
+                                            </div>
                                         </div>
-<!--                                        <div sec:authentication="!isAuthenticated()">-->
                                         <div th:if="!${#request.userPrincipal}">
                                             <a th:href="@{/login}" id="loginBtn">Login / Register</a>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </div>

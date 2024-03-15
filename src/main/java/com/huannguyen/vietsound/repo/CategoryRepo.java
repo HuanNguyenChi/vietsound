@@ -14,4 +14,5 @@ public interface CategoryRepo extends JpaRepository<Category,Integer> {
     Category findById(int id);
     @Query("select c from Category c")
     List<Category> findCategoriesLimit(Pageable pageable);
+    void deleteById(int id);
 }

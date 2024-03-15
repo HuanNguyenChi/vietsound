@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface UserService {
     User saveUser(User user);
     User update(User user);
-
+    void delete(int id);
     void addToUser(String username, String rolename);
-
+    List<User> findAll();
     User findById(int id);
 
     User findByUsername(String username);

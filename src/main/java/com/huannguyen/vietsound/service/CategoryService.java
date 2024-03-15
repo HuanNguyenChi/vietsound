@@ -10,4 +10,6 @@ public interface CategoryService {
     List<Category> findAll();
     Category findById(int id);
     List<Category> findCategoriesLimit(int page, int size);
+    void delete(int id);
+    Category save(Category category);
 }

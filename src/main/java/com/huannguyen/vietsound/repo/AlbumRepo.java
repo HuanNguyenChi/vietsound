@@ -17,4 +17,5 @@ public interface AlbumRepo extends JpaRepository<Album,Integer> {
     List<Album> findBySingerOfAlbum(Singer singer);
     @Query("select a from Album a")
     List<Album> findAlbumsLimit(Pageable pageable);
+    void deleteById(int id);
 }

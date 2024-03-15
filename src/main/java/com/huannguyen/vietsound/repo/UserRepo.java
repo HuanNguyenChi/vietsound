@@ -19,13 +19,5 @@ public interface UserRepo extends JpaRepository<User,Integer> {
     boolean existsUserByEmail(String email);
     boolean existsUserByUsername(String username);
     boolean existsUserByUsernameAndPassword(String username,String password);
-//    @Query("select u.songLike from User u")
-//    List<Song> findSongLimitFromUser(Pageable pageable);
-//    @Query("select u.albumList from User u")
-//    List<Album> findAlbumLimitFromUser(Pageable pageable);
-//    @Query("select u.singerList from User u")
-//    List<Singer> findSingerLimitFromUser(Pageable pageable);
-//    @Query("select u.categoryLikeList from User u")
-//    List<Category> findCategoryLimitFromUser(Pageable pageable);
-
+    void deleteById(int id);
 }

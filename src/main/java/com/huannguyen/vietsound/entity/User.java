@@ -44,7 +44,7 @@ public class User{
     @Column(name = "fullname")
     private String fullname;
 
-    @ManyToMany(fetch = FetchType.EAGER)
+    @ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_role",
             joinColumns = @JoinColumn(name = "userId"),
@@ -53,7 +53,7 @@ public class User{
     @JsonIgnore
     private List<Role> roles;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_album",
             joinColumns = @JoinColumn(name = "userId"),
@@ -61,7 +61,7 @@ public class User{
     )
     private List<Album> albumList;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_song",
             joinColumns = @JoinColumn(name = "userId"),
@@ -69,7 +69,7 @@ public class User{
     )
     private List<Song> songLike;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_category",
             joinColumns = @JoinColumn(name = "userId"),
@@ -77,11 +77,18 @@ public class User{
     )
     private List<Category> categoryLikeList;
 
-    @ManyToMany(fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY,cascade = CascadeType.ALL)
     @JoinTable(
             name = "user_singer",
             joinColumns = @JoinColumn(name = "userId"),
             inverseJoinColumns = @JoinColumn(name = "singerId")
     )
     private List<Singer> singerList;
+
+    public boolean hasRole(String role){
+        for (Role roleItem : this.roles){
+            if( roleItem.getName().equals(role)) return true;
+        }
+        return false;
+    }
 }

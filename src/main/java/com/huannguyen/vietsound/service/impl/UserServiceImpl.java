@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void delete(int id) {
+         userRepo.deleteById(id);
+    }
+
+    @Override
     public void addToUser(String username, String rolename) {
         User user = userRepo.findByUsername(username);
         Role role = roleRepo.findByName(rolename);
@@ -48,6 +53,11 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userRepo.findAll();
     }
 
     @Override

@@ -36,4 +36,14 @@ public class AlbumServiceImpl implements AlbumService {
         Pageable pageable = PageRequest.of(page,size);
         return albumRepo.findAlbumsLimit(pageable);
     }
+
+    @Override
+    public Album save(Album album) {
+        return albumRepo.save(album);
+    }
+
+    @Override
+    public void delete(int id) {
+        albumRepo.deleteById(id);
+    }
 }

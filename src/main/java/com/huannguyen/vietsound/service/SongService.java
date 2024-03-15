@@ -11,4 +11,6 @@ public interface SongService {
     Song findById(int id);
     // day la JPQL
     List<Song> findSongsLimit(int page, int size);
+    Song save(Song song);
+    void delete(int id);
 }

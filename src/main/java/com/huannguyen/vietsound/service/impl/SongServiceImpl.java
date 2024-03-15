@@ -34,4 +34,14 @@ public class SongServiceImpl implements SongService {
         Pageable pageable = PageRequest.of(page,size);
         return songRepo.findSongsLimit(pageable);
     }
+
+    @Override
+    public Song save(Song song) {
+        return songRepo.save(song);
+    }
+
+    @Override
+    public void delete(int id) {
+        songRepo.deleteSongById(id);
+    }
 }

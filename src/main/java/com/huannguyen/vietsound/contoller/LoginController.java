@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,20 +36,15 @@ public class LoginController {
     public String login(Model model){
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
-        return "login";
+        return "login/login";
     }
-
-//    @GetMapping("/logout")
-//    public String logout(){
-//        return "index";
-//    }
 
     @GetMapping("/register")
     public String registerHome(Model model){
 
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
-        return "registerhome";
+        return "login/registerhome";
     }
     @PostMapping("/register")
     public String registerPost(@RequestParam String username,

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"   xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+</head>
+<body>
+<!-- ##### Nav start ##### -->
+<header class="header-area">
+    <!-- Navbar Area -->
+    <div class="oneMusic-main-menu">
+        <div class="classy-nav-container breakpoint-off">
+            <div class="container">
+                <!-- Menu -->
+                <div class="classy-navbar justify-content-between" id="oneMusicNav">
+                    <!-- Nav brand -->
+                    <a th:href="@{/}" class="nav-brand"><img th:src="@{/img/core-img/logo.png}"  alt=""></a>
+                    <!-- Navbar Toggler -->
+                    <div class="classy-navbar-toggler">
+                        <span class="navbarToggler"></span>
+                    </div>
+                    <!-- Menu -->
+                    <div class="classy-menu">
+                        <!-- Close Button -->
+                        <div class="classycloseIcon">
+                            <div class="cross-wrap"><span class="top"></span><span class="bottom"></span></div>
+                        </div>
+                        <!-- Nav Start -->
+                        <div class="classynav">
+                            <!-- Login/Register & Cart Button -->
+                            <div class="login-register-cart-button d-flex align-items-center" >
+                                <!-- Login/Register -->
+                                <div class="login-register-btn mr-50" >
+                                    <div th:if="${#request.userPrincipal}">
+                                        <a th:href="'/user/' + ${#authentication.getName()}" class="user-link">
+                                            <span sec:authentication="name"></span>
+                                            <span class="icon-home"></span>
+                                        </a>
+                                        <a th:href="@{/logout}" style="margin-left: 25px;display: inline-block">Logout</a>
+                                        <div th:if="${#request.isUserInRole('ROLE_ADMIN')}" style="display: inline-block;margin-left: 25px">
+                                            <a th:href="@{/}">Music page <i class="fa fa-angle-double-right"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- ##### Nav End ##### -->
+</body>
+</html>
