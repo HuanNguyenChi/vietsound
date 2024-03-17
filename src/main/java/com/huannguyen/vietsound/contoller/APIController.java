@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +28,6 @@ public class APIController {
     private SingerService singerService;
     @Autowired
     private UserService userService;
-    @Autowired
-    private CustomUserDetailSevice customUserDetailSevice;
     @Autowired
     private StorageService storageService;
     @Autowired
@@ -144,6 +143,42 @@ public class APIController {
         return "false";
     }
 
+    @GetMapping("/user/addsongtouser")
+    public String addSongToUser(@RequestParam("idMusic") int idMusic, Principal principal){
+        if(principal != null){
+            User user = userService.findByUsername(principal.getName());
+            if(!user.hasSong(idMusic)) {
+                user.getSongLike().add(songService.findById(idMusic));
+                userService.update(user);
+            }else {
+                return "You haved liked this song!";
+            }
+        }else {
+            return "Please Login!";
+        }
+        return "Success";
+    }
+    @GetMapping("/user/addsingertouser")
+    public String addSingerToUser(@RequestParam("idSinger") int idSinger, Principal principal){
+        if(principal != null){
+            User user = userService.findByUsername(principal.getName());
+            if(!user.hasSinger(idSinger)) {
+                user.getSingerList().add(singerService.findById(idSinger));
+                userService.update(user);
+            }else {
+                return "You haved liked this singer!";
+            }
+        }else {
+            return "Please Login!";
+        }
+        return "Success";
+    }
+    @GetMapping("/user/removesongtouser")
+    public String removeSongToUser(@RequestParam("idSong") int idSong, Principal principal){
+        User user = userService.findByUsername(principal.getName());
+        userService.update(userService.removeSongInUser(user,idSong));
+        return "success";
+    }
     @GetMapping(path = "/loadmoresongs")
     public String loadMoreSong(Model model, @RequestParam int page) {
         List<Song> songList = songService.findSongsLimit(page, 8);

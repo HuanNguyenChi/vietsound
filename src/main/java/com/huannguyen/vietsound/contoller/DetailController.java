@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -29,9 +30,6 @@ public class DetailController {
     @GetMapping("/song/{id}")
     public String getSongById(Model model, @PathVariable("id") int id){
         Song song = songService.findById(id);
-//        Singer singer = singerService.findById(song.getSingerInSong().get(0).getId());
-//        List<Song> songOfSinger = singer.getSongOfSinger();
-//        List<Album> albumList = albumService.findBySingerOfAlbum(singer);
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("song",song);
@@ -44,20 +42,37 @@ public class DetailController {
     public String getSingerById(Model model, @PathVariable("id") int id){
         Singer singer = singerService.findById(id);
         List<Category> categoryList = categoryService.findAll();
+        List<Song> songList = new ArrayList<>();
+        List<Album> albumList = new ArrayList<>();
+
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("singer",singer);
-        model.addAttribute("songOfSinger",singer.getSongList());
-        model.addAttribute("albumList",singer.getAlbumList());
+        if(singer.getSongList().size() != 0) {
+            songList = singer.getSongList();
+        }
+        if(singer.getAlbumList().size() != 0){
+            albumList = singer.getAlbumList();
+        }
+        model.addAttribute("songOfSinger",songList);
+        model.addAttribute("albumList",albumList);
         return "user/singerdetail";
     }
     @GetMapping("/album/{id}")
     public String getAlbumById(Model model, @PathVariable("id") int id){
         Album album = albumService.findById(id);
         List<Category> categoryList = categoryService.findAll();
+        List<Song> songList = new ArrayList<>();
+        List<Album> albumDiff = new ArrayList<>();
+        if(album.getSongInAlbum().size() != 0){
+            songList = album.getSongInAlbum();
+        }
+        if(album.getSingerOfAlbum().getAlbumList().size() != 0){
+            albumDiff = album.getSingerOfAlbum().getAlbumList();
+        }
         model.addAttribute("categoryList",categoryList);
-        model.addAttribute("songList",album.getSongInAlbum());
+        model.addAttribute("songList",songList);
         model.addAttribute("singer",album.getSingerOfAlbum());
-        model.addAttribute("albumDiff",album.getSingerOfAlbum().getAlbumList());
+        model.addAttribute("albumDiff",albumDiff);
 
         return "user/albumdetail";
     }

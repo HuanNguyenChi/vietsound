@@ -3,6 +3,7 @@ package com.huannguyen.vietsound.service.impl;
 import com.huannguyen.vietsound.entity.*;
 import com.huannguyen.vietsound.repo.RoleRepo;
 import com.huannguyen.vietsound.repo.UserRepo;
+import com.huannguyen.vietsound.service.CategoryService;
 import com.huannguyen.vietsound.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +25,6 @@ public class UserServiceImpl implements UserService {
     private UserRepo userRepo;
     @Autowired
     private RoleRepo roleRepo;
-
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -94,7 +94,9 @@ public class UserServiceImpl implements UserService {
     public List<Song> findSongLimitFromUser(int page, int size, String username) {
         User user = userRepo.findByUsername(username);
         List<Song> songList = new ArrayList<>();
-        for(int index=page*size;index<(page+1)*size;index++){
+        int length = (page+1) * size;
+        if(user.getSongLike().size() <= (page+1) * size)   length = user.getSongLike().size();
+        for(int index=page*size;index<length;index++){
             songList.add(user.getSongLike().get(index));
         }
         return songList;
@@ -104,7 +106,9 @@ public class UserServiceImpl implements UserService {
     public List<Category> findCategoryLimitFromUser(int page, int size, String username) {
         User user = userRepo.findByUsername(username);
         List<Category> categoryList = new ArrayList<>();
-        for(int index=page*size;index<(page+1)*size;index++){
+        int length = (page+1) * size;
+        if(user.getCategoryLikeList().size() <= (page+1) * size)   length = user.getCategoryLikeList().size();
+        for(int index=page*size;index<length;index++){
             categoryList.add(user.getCategoryLikeList().get(index));
         }
         return categoryList;
@@ -114,7 +118,9 @@ public class UserServiceImpl implements UserService {
     public List<Album> findAlbumLimitFromUser(int page, int size, String username) {
         User user = userRepo.findByUsername(username);
         List<Album> albumList = new ArrayList<>();
-        for(int index=page*size;index<(page+1)*size;index++){
+        int length = (page+1) * size;
+        if(user.getAlbumList().size() <= (page+1) * size)   length = user.getAlbumList().size();
+        for(int index=page*size;index<length;index++){
             albumList.add(user.getAlbumList().get(index));
         }
         return albumList;
@@ -124,10 +130,57 @@ public class UserServiceImpl implements UserService {
     public List<Singer> findSingerLimitFromUser(int page, int size, String username) {
         User user = userRepo.findByUsername(username);
         List<Singer> singerList = new ArrayList<>();
-        for(int index=page*size;index<(page+1)*size;index++){
+        int length = (page+1) * size;
+        if(user.getSingerList().size() <= (page+1) * size)   length = user.getSingerList().size();
+        for(int index=page*size;index<length;index++){
             singerList.add(user.getSingerList().get(index));
         }
         return singerList;
     }
+
+    @Override
+    public User removeSongInUser(User user, int idSong) {
+        for(Song songItem : user.getSongLike()){
+            if(songItem.getId().equals(idSong)){
+                user.getSongLike().remove(songItem);
+                break;
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public User removeAlbumInUser(User user, int idAlbum) {
+        for(Album albumItem : user.getAlbumList()){
+            if(albumItem.getId().equals(idAlbum)){
+                user.getAlbumList().remove(albumItem);
+                break;
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public User removeSingerInUser(User user, int idSinger) {
+        for(Singer singerItem : user.getSingerList()){
+            if(singerItem.getId().equals(idSinger)){
+                user.getSingerList().remove(singerItem);
+                break;
+            }
+        }
+        return user;
+    }
+
+    @Override
+    public User removeCategoryInUser(User user, int idCategory) {
+        for(Category categoryItem : user.getCategoryLikeList()){
+            if(categoryItem.getId().equals(idCategory)){
+                user.getCategoryLikeList().remove(categoryItem);
+                break;
+            }
+        }
+        return user;
+    }
+
 
 }

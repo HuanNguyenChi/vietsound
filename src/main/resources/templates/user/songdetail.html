@@ -39,22 +39,24 @@
         <div class="row align-items-end">
             <div class="col-12 col-md-5 col-lg-4">
                 <div class="featured-artist-thumb">
-                    <img th:src="'/img/bg-img/' + ${song.getImage()}" alt="">
+                    <img th:src="'/img/bg-img/' + ${song.getImage()}" alt="" >
                 </div>
             </div>
             <div class="col-12 col-md-7 col-lg-8">
                 <div class="featured-artist-content">
                     <!-- Section Heading -->
                     <div class="section-heading white text-left mb-30">
+                        <h1 class="data-id-song-detail" th:text="${song.getId()}" style="visibility: hidden"></h1>
                         <p>Top Trending</p>
-                        <h2 th:text="${song.getName()}"></h2>
+                        <h2 th:text="${song.getName()}" style="display: inline-block" ></h2>
+                        <p style="display: inline-block; float: right">
+                            <span th:text="${song.getUserLikedSong().size()}"></span>
+                            <span class="icon-heart btn btn-love"></span>
+                        </p>
+
                     </div>
                     <!--                    <p th:text="${singerList.get(0).getStory()}"></p>-->
-                    <div class="song-play-area">
-                        <div class="song-name">
-                            <p th:if="${song.getAlbum() != null}"><span th:text="${song.getAlbum().getName()}"></span></p>
-                            <p th:unless="${song.getAlbum() == null}"><span th:text="${song.getName()}"></span></p>
-                        </div>
+                    <div class="song-play-area" >
                         <audio preload="auto" controls>
                             <source th:src="'/audio/' + ${song.getLink()}">
                         </audio>
@@ -71,7 +73,12 @@
 <!-- ##### Singer detail ##### -->
 <section class="oneMusic-buy-now-area has-fluid bg-gray section-padding-100" >
     <div class="container">
+        <p class="data-id-singer-detail" th:text="${singer.getId()}" style="visibility: hidden"></p>
         <h2 th:text = "${singer.getStageName()}" class="style-2"></h2>
+        <p style="display: inline-block;float: right;margin-top: 20px">
+            <span th:text="${singer.getUserLikedSinger().size()}"></span>
+            <span class="icon-user btn btn-follow" ></span>
+        </p>
         <hr>
         <div class="row align-items-end">
             <div class="col-12 col-md-5 col-lg-4">
@@ -122,11 +129,11 @@
                     </div>
                 </a>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
+                    <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                 </div>
             </div>
         </div>
@@ -140,7 +147,7 @@
             <div class="col-12">
                 <div class="section-heading style-2">
                     <p>See album’s new</p>
-                    <h2 th:text = "${singer.getStageName()} + ' Music' "></h2>
+                    <h2 th:text = "${singer.getStageName()} + ' Album' "></h2>
                 </div>
             </div>
         </div>
@@ -163,11 +170,11 @@
                     </div>
                 </a>
             </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
-                        <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
-                    </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="load-more-btn text-center wow fadeInUp" data-wow-delay="300ms">
+                    <a href="#" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                 </div>
             </div>
         </div>
@@ -187,6 +194,42 @@
 <script th:src="@{/js/plugins/plugins.js}"></script>
 <!-- Active js -->
 <script th:src="@{/js/active.js}"></script>
+<script th:src="@{/js/customjs.js}"></script>
+<!--<script>-->
+<!--    $(document).ready(function(){-->
+<!--        $(".btn-love").click(function (){-->
+<!--            -->
+<!--            var idMusic = $(this).closest(".featured-artist-content").find(".data-id-song-detail").text();-->
+
+<!--            $.ajax({-->
+<!--                url : "/api/user/addsongtouser",-->
+<!--                type : "get",-->
+<!--                data : {-->
+<!--                    idMusic : idMusic,-->
+<!--                },-->
+<!--                success : function (value){-->
+<!--                    alert(value)-->
+
+<!--                }-->
+<!--            })-->
+<!--        })-->
+<!--        $(".btn-follow").click(function (){-->
+<!--            var idSinger = $(this).closest(".container").find(".data-id-singer-detail").text();-->
+<!--            $.ajax({-->
+<!--                url : "/api/user/addsingertouser",-->
+<!--                type : "get",-->
+<!--                data : {-->
+<!--                    idSinger : idSinger,-->
+<!--                },-->
+<!--                success : function (value){-->
+<!--                    alert(value)-->
+<!--                }-->
+<!--            })-->
+<!--        })-->
+
+<!--    });-->
+
+<!--</script>-->
 </body>
 
 </html>

@@ -109,26 +109,28 @@
                     <div class="tab-content">
                         <div class="tab-pane active">
                             <h2>Favorites Song</h2>
-                            <div th:if="${songList == null}" >
+                            <div th:if="${songList.size() == 0}" >
                                 <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any songs</h4>
                             </div>
-                            <div th:if="${songList != null}">
-
-                                <div th:each="song : ${songList}">
-                                    <div class="featured-artist-content" style="margin-top: 10px">
-                                        <div class="song-play-area" style="background: #e8d7d7">
-                                            <div style="display: inline-block; margin-bottom: 10px">
-                                                <img th:src="'/img/bg-img/' + ${song.getImage()}" alt="song-img" width="65px" height="auto">
-                                            </div>
-                                            <div class="song-name" style="margin-left: 30px; display: inline-block">
-                                                <p th:text="${song.getName()} + ' - ' + ${song.getSingerOfSong().getStageName()}" style="color: black"></p>
-                                            </div>
-                                            <audio preload="auto" controls>
-                                                <source th:src="'/audio/' + ${song.getLink()}">
-                                            </audio>
+                            <div th:if="${songList.size() != 0}">
+                                <div class="featured-artist-content" th:each="song : ${songList}" style="margin-top: 10px">
+                                    <div class="song-play-area" style="background: #e8d7d7">
+                                        <div style="display: inline-block; margin-bottom: 10px">
+                                            <img th:src="'/img/bg-img/' + ${song.getImage()}" alt="song-img" width="65px" height="auto">
                                         </div>
+                                        <p style="display: inline-block; float: right" class="btn btn-dislike">
+                                            <span class="icon-heart "></span>
+                                        </p>
+                                        <div class="song-name" style="margin-left: 30px; display: inline-block">
+                                            <p th:text="${song.getName()} + ' - ' + ${song.getSingerOfSong().getStageName()}" style="color: black"></p>
+                                        </div>
+                                        <p class="data-id-song-detail-user" th:text="${song.getId()}" style="visibility: hidden"></p>
+                                        <audio preload="auto" controls>
+                                            <source th:src="'/audio/' + ${song.getLink()}">
+                                        </audio>
                                     </div>
                                 </div>
+                            </div>
                                 <div class="row" style="margin-top: 30px">
                                     <div class="col-12">
                                         <div class="load-more-btn text-center wow fadeInUp"  data-wow-delay="300ms">
@@ -140,10 +142,10 @@
                         </div>
                         <div class="tab-pane">
                             <h2>Singer</h2>
-                            <div th:if="${singerList == null}" >
+                            <div th:if="${singerList.size() == 0}" >
                                 <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any singers</h4>
                             </div>
-                            <div th:if="${singerList != null}">
+                            <div th:if="${singerList.size() != 0}">
                                 <!-- Song List -->
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each = "singer : ${singerList}">
@@ -174,10 +176,10 @@
                         </div>
                         <div class="tab-pane">
                             <h2>Album</h2>
-                            <div th:if="${albumList == null}" >
+                            <div th:if="${albumList.size() == 0}" >
                                 <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any albums</h4>
                             </div>
-                            <div th:if="${albumList != null}">
+                            <div th:if="${albumList.size() != 0}">
                                 <div class="row">
                                     <div class="col-12 col-sm-6 col-md-4 col-lg-4" th:each = "album : ${albumList}">
                                         <a th:href="'/album/' + ${album.getId()}">
@@ -208,12 +210,12 @@
                         </div>
                         <div class="tab-pane">
                             <h2>Category</h2>
-                            <div th:if="${categoryList == null}" >
+                            <div th:if="${categoryList1.size() == 0}" >
                                 <h4 style="display: flex;align-items: center;justify-content: center;color: #8d8d8d">You don't like any songs</h4>
                             </div>
-                            <div th:if="${categoryList != null}">
+                            <div th:if="${categoryList1.size() != 0}">
                                 <div class="row">
-                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each = "category : ${categoryList}">
+                                    <div class="col-12 col-sm-6 col-md-4 col-lg-3" th:each = "category : ${categoryList1}">
                                         <a th:href="'/category/' + ${category.getId()}">
                                             <div class="single-album-area wow fadeInUp" data-wow-delay="300ms">
                                                 <div class="album-thumb">
@@ -263,7 +265,17 @@
 <!-- Active js -->
 <script th:src="@{/js/active.js}"></script>
 <!--custom js-->
-<script th:src="@{/js/customjs.js}"></script>
+<!--<script th:src="@{/js/customjs.js}"></script>-->
+<script>
+    $(document).ready(function() {
+        $(".btn-dislike").click(function() {
+            var parent = $(this).closest(".featured-artist-content");
+            var dataId = parent.find(".data-id-song-detail-user").text();
+            alert(dataId);
+        });
+    });
+
+</script>
 <script>
     const $ = document.querySelector.bind(document);
     const $$ = document.querySelectorAll.bind(document);
@@ -293,7 +305,6 @@
             pane.classList.add("active");
         };
     });
-
 
 </script>
 </body>

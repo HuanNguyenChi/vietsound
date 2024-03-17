@@ -27,5 +27,8 @@ public interface UserService {
     List<Category> findCategoryLimitFromUser(int page, int size, String username);
     List<Album> findAlbumLimitFromUser(int page, int size, String username);
     List<Singer> findSingerLimitFromUser(int page, int size, String username);
-
+    User removeSongInUser(User user, int idSong);
+    User removeAlbumInUser(User user, int idAlbum);
+    User removeSingerInUser(User user, int idSinger);
+    User removeCategoryInUser(User user, int idCategory);
 }

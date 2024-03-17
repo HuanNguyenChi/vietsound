@@ -32,6 +32,7 @@ public class LoginController {
     private CustomUserDetailSevice customUserDetailSevice;
     @Autowired
     private PasswordEncoder passwordEncoder;
+
     @GetMapping("/login")
     public String login(Model model){
         List<Category> categoryList = categoryService.findAll();
@@ -46,11 +47,15 @@ public class LoginController {
         model.addAttribute("categoryList",categoryList);
         return "login/registerhome";
     }
+
     @PostMapping("/register")
     public String registerPost(@RequestParam String username,
                                @RequestParam String password,
                                @RequestParam String email){
         User user = new User();
+        if(userService.existsUserByEmail(email) && userService.existsUserByUsername(username)){
+            return "/login/register";
+        }
         user.setAddress("");
         user.setEmail(email);
         user.setPhone("");

@@ -91,4 +91,28 @@ public class User{
         }
         return false;
     }
+    public boolean hasSong(int id){
+        for (Song songItem : this.songLike){
+            if(songItem.getId().equals(id)) return true;
+        }
+        return false;
+    }
+    public boolean hasCategory(int id){
+        for(Category categoryItem : this.categoryLikeList){
+            if(categoryItem.getId().equals(id)) return true;
+        }
+        return false;
+    }
+    public boolean hasAlbum(int id){
+        for(Album albumItem : this.albumList){
+            if(albumItem.getId().equals(id)) return true;
+        }
+        return false;
+    }
+    public boolean hasSinger(int id){
+        for(Singer singerItem : this.singerList){
+            if(singerItem.getId().equals(id)) return true;
+        }
+        return false;
+    }
 }
