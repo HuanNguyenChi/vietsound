@@ -25,7 +25,7 @@
 <div th:replace="/fragments/header :: header"/>
 
 <!-- ##### Breadcumb Area Start ##### -->
-<section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{/img/bg-img/breadcumb3.jpg} + ');'">
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
   <div class="bradcumbContent">
     <p>See what’s new</p>
     <h2>Hits Song</h2>
@@ -55,6 +55,7 @@
           <div class="section-heading white text-left mb-30">
             <h2 th:text="${singer.getName()}" style="color: black"></h2>
           </div>
+<!--          <pre th:text="${singer.getStory()}" style="color: black"></pre>-->
           <p th:text="${singer.getStory()}" style="color: black"></p>
         </div>
       </div>

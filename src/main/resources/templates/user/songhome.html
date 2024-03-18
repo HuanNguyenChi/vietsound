@@ -26,7 +26,7 @@
 <div th:replace="/fragments/header :: header"/>
 
 <!-- ##### Breadcumb Area Start ##### -->
-<section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{/img/bg-img/breadcumb3.jpg} + ');'">
+<section class="breadcumb-area bg-img bg-overlay"style="background-image: url(/img/bg-img/breadcumb3.jpg);">
     <div class="bradcumbContent">
         <p>See what’s new</p>
         <h2>Hit Song</h2>
@@ -70,9 +70,6 @@
                         <span class="icon-heart btn btn-love" th:attr="id-mode=@{${song.getId() + ' ' + song.getNameModel()}}"></span>
                         <span th:text="${song.getSingerOfSong().getUserLikedSinger().size()}"></span>
                         <span class="icon-user btn btn-follow" ></span>
-<!--                        <span class="icon-heart" ></span>-->
-<!--                        <span class="fa fa-thumbs-o-down" style="margin-left: 15px;" ></span>-->
-<!--                        <span class="icon-user" style="margin-left: 15px;" ></span>-->
                     </p>
                 </div>
             </div>
@@ -80,7 +77,7 @@
         <div class="row">
             <div class="col-12">
                 <div class="load-more-btn text-center wow fadeInUp"  data-wow-delay="300ms">
-                    <a th:href="@{#}" data-page="1" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
+                    <a id="data-page-songhome" data-page="0" class="btn oneMusic-btn">Load More <i class="fa fa-angle-double-right"></i></a>
                 </div>
             </div>
         </div>
@@ -120,7 +117,7 @@
                     let dataSong = $('.container-fluid').find("#dataSong");
                     alert("success")
                     dataSong.append(res);
-                    $(this).attr('data-page', nextPage);
+                    $("a#data-page-songhome").attr('data-page', nextPage);
                 }
             })
         })

@@ -46,7 +46,7 @@ public class HomeController {
     }
     @GetMapping("/album")
     public String getAllAlbum(Model model, Principal principal){
-        List<Album> albumList = albumService.findAll();
+        List<Album> albumList = albumService.findAlbumsLimit(0,6);
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("albumList",albumList);
@@ -54,7 +54,7 @@ public class HomeController {
     }
     @GetMapping("/song")
     public String getAllSong(Model model){
-        List<Song> songList = songService.findSongsLimit(0,16);
+        List<Song> songList = songService.findSongsLimit(0,8);
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("songList",songList);
@@ -64,7 +64,17 @@ public class HomeController {
     public String getAllCategory(Model model,Principal principal){
         List<Category> categoryList = categoryService.findAll();
         model.addAttribute("categoryList",categoryList);
+        List<Category> categoryListLimit = categoryService.findCategoriesLimit(0,6);
+        model.addAttribute("categoryListLimit",categoryListLimit);
         return "user/categoryhome";
+    }
+    @GetMapping("/singer")
+    public String singerHome(Model model){
+        List<Singer> singerList = singerService.findSingersLimit(0,6);
+        model.addAttribute("singerList",singerList);
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categoryList",categoryList);
+        return "user/singerhome";
     }
     @GetMapping("/tophit")
     public String tophit(Model model){

@@ -26,7 +26,7 @@
 <!-- Header -->
 <div th:replace="/fragments/header :: header"/>
 <!-- ##### Breadcumb Area Start ##### -->
-<section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{/img/bg-img/breadcumb.jpg} + ');'">
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb.jpg);">
     <div class="bradcumbContent">
         <p>See Information</p>
         <h2>Favorites</h2>
@@ -118,13 +118,14 @@
                                         <div style="display: inline-block; margin-bottom: 10px">
                                             <img th:src="'/img/bg-img/' + ${song.getImage()}" alt="song-img" width="65px" height="auto">
                                         </div>
-                                        <p style="display: inline-block; float: right" class="btn btn-dislike">
-                                            <span class="icon-heart "></span>
+                                        <p style="display: inline-block; float: right" class="">
+                                            <span class="icon-trash btn btn-dislike"></span>
                                         </p>
                                         <div class="song-name" style="margin-left: 30px; display: inline-block">
                                             <p th:text="${song.getName()} + ' - ' + ${song.getSingerOfSong().getStageName()}" style="color: black"></p>
                                         </div>
-                                        <p class="data-id-song-detail-user" th:text="${song.getId()}" style="visibility: hidden"></p>
+                                        <p class="data-id-song-detail-user" th:text="${song.getId()}" style="visibility: hidden;display: inline-block"></p>
+
                                         <audio preload="auto" controls>
                                             <source th:src="'/audio/' + ${song.getLink()}">
                                         </audio>
@@ -139,7 +140,6 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
                         <div class="tab-pane">
                             <h2>Singer</h2>
                             <div th:if="${singerList.size() == 0}" >
@@ -265,17 +265,7 @@
 <!-- Active js -->
 <script th:src="@{/js/active.js}"></script>
 <!--custom js-->
-<!--<script th:src="@{/js/customjs.js}"></script>-->
-<script>
-    $(document).ready(function() {
-        $(".btn-dislike").click(function() {
-            var parent = $(this).closest(".featured-artist-content");
-            var dataId = parent.find(".data-id-song-detail-user").text();
-            alert(dataId);
-        });
-    });
-
-</script>
+<script th:src="@{/js/customjs.js}"></script>
 <script>
     const $ = document.querySelector.bind(document);
     const $$ = document.querySelectorAll.bind(document);

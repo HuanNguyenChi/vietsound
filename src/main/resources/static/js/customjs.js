@@ -1,3 +1,4 @@
+
 $(document).ready(function(){
     $(".btn-love").click(function (){
         var idMusic = $(this).closest(".featured-artist-content").find(".data-id-song-detail").text();
@@ -27,5 +28,10 @@ $(document).ready(function(){
             }
         })
     })
-
+    $("span.icon-trash.btn-dislike").click(function (){
+        alert("check")
+        // var parent = $(this).closest(".featured-artist-content");
+        // var idSong = parent.find(".data-id-song-detail-user").text();
+        // alert(idSong)
+    })
 });

@@ -36,6 +36,8 @@ public class DetailController {
         model.addAttribute("singer",song.getSingerOfSong());
         model.addAttribute("songOfSinger",song.getSingerOfSong().getSongList());
         model.addAttribute("albumList",song.getSingerOfSong().getAlbumList());
+        song.setListens(song.getListens() + 1);
+        songService.save(song);
         return "user/songdetail";
     }
     @GetMapping("/singer/{id}")

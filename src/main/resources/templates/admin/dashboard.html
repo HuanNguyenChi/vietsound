@@ -189,7 +189,7 @@
             var idSong = $(this).closest('tr').find('.data-id-song').text();
             $.ajax({
                 url: "/api/delete/song",
-                type : "get",
+                type : "delete",
                 data : {
                     idSong : idSong,
                 },

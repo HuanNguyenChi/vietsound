@@ -25,7 +25,7 @@
 <div th:replace="/fragments/header :: header"/>
 
 <!-- ##### Breadcumb Area Start ##### -->
-<section class="breadcumb-area bg-img bg-overlay" th:style="'background-image: url(' + @{/img/bg-img/breadcumb3.jpg} + ');'">
+<section class="breadcumb-area bg-img bg-overlay" style="background-image: url(/img/bg-img/breadcumb3.jpg);">
     <div class="bradcumbContent">
         <p>See what’s new</p>
         <h2>Hits Song</h2>
@@ -34,7 +34,7 @@
 <!-- ##### Breadcumb Area End ##### -->
 
 <!-- ##### Featured Artist Area Start ##### -->
-<section class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" th:style="'background-image: url(' + @{/img/bg-img/bg-4.jpg} + ');'">
+<section class="featured-artist-area section-padding-100 bg-img bg-overlay bg-fixed" style="background-image: url(/img/bg-img/bg-4.jpg);">
     <div class="container">
         <div class="row align-items-end">
             <div class="col-12 col-md-5 col-lg-4">
@@ -57,17 +57,30 @@
                     </div>
                     <!--                    <p th:text="${singerList.get(0).getStory()}"></p>-->
                     <div class="song-play-area" >
-                        <audio preload="auto" controls>
+                        <audio preload="auto" autoplay controls>
                             <source th:src="'/audio/' + ${song.getLink()}">
                         </audio>
                     </div>
                 </div>
-
             </div>
-
         </div>
-        <p th:text="${song.getContent()}"></p>
+
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default">
+                <div class="panel-header">
+                    <h4 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapse" style="color: white;padding-top: 30px">Content</a>
+                    </h4>
+                </div>
+                <div id="collapse" class="panel-collapse collapse in">
+                    <div class="panel-body">
+                        <pre th:text="${song.getContent()}" style="color: white;padding-top: 30px"></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
 </section>
 
 <!-- ##### Singer detail ##### -->
@@ -195,41 +208,6 @@
 <!-- Active js -->
 <script th:src="@{/js/active.js}"></script>
 <script th:src="@{/js/customjs.js}"></script>
-<!--<script>-->
-<!--    $(document).ready(function(){-->
-<!--        $(".btn-love").click(function (){-->
-<!--            -->
-<!--            var idMusic = $(this).closest(".featured-artist-content").find(".data-id-song-detail").text();-->
-
-<!--            $.ajax({-->
-<!--                url : "/api/user/addsongtouser",-->
-<!--                type : "get",-->
-<!--                data : {-->
-<!--                    idMusic : idMusic,-->
-<!--                },-->
-<!--                success : function (value){-->
-<!--                    alert(value)-->
-
-<!--                }-->
-<!--            })-->
-<!--        })-->
-<!--        $(".btn-follow").click(function (){-->
-<!--            var idSinger = $(this).closest(".container").find(".data-id-singer-detail").text();-->
-<!--            $.ajax({-->
-<!--                url : "/api/user/addsingertouser",-->
-<!--                type : "get",-->
-<!--                data : {-->
-<!--                    idSinger : idSinger,-->
-<!--                },-->
-<!--                success : function (value){-->
-<!--                    alert(value)-->
-<!--                }-->
-<!--            })-->
-<!--        })-->
-
-<!--    });-->
-
-<!--</script>-->
 </body>
 
 </html>

@@ -125,7 +125,7 @@
             var idSinger = $(this).closest('tr').find('.data-id-singer').text();
             $.ajax({
                 url: "/api/delete/singer",
-                type : "get",
+                type : "delete",
                 data : {
                     idSinger : idSinger,
                 },

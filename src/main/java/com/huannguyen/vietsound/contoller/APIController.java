@@ -1,9 +1,6 @@
 package com.huannguyen.vietsound.contoller;
 
-import com.huannguyen.vietsound.entity.Role;
-import com.huannguyen.vietsound.entity.Singer;
-import com.huannguyen.vietsound.entity.Song;
-import com.huannguyen.vietsound.entity.User;
+import com.huannguyen.vietsound.entity.*;
 import com.huannguyen.vietsound.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -32,23 +29,23 @@ public class APIController {
     private StorageService storageService;
     @Autowired
     private RoleService roleService;
-    @GetMapping("/delete/category")
+    @DeleteMapping("/delete/category")
     public String deleteCategory(@RequestParam("idCategory") int id){
         categoryService.delete(id);
         return "true";
     }
-    @GetMapping("/delete/album")
+    @DeleteMapping("/delete/album")
     public String deleteAlbum(@RequestParam("idAlbum") int id){
         albumService.delete(id);
         return "true";
     }
-    @GetMapping("/delete/singer")
+    @DeleteMapping("/delete/singer")
     public String deleteSinger(@RequestParam("idSinger") int id){
         singerService.delete(id);
         return "true";
     }
 
-    @GetMapping("/deleteuser")
+    @DeleteMapping("/deleteuser")
     public String deleteUserByAdmin(@RequestParam("id") int id){
         User user = userService.findById(id);
         user.getAlbumList().clear();
@@ -92,7 +89,7 @@ public class APIController {
         return "true";
     }
 
-    @GetMapping("/delete/song")
+    @DeleteMapping("/delete/song")
     public String deleteSong(@RequestParam("idSong") int id) {
         songService.delete(id);
         return "true";
@@ -194,8 +191,8 @@ public class APIController {
                     "                            </div>\n" +
                     "                        </div>\n" +
                     "                        <div class=\"album-info\">";
-            res += "<h5 text = \"" + song.getName() + "\"></h5>";
-            res += "<p text = \"" + song.getSingerOfSong().getStageName() + "\"></p>";
+            res += "<h5 >" + song.getName() + "</h5>";
+            res += "<p>" + song.getSingerOfSong().getStageName() + "</p>";
             res += "               </div>\n" +
                     "                    </div>\n" +
                     "                </a>\n" +
@@ -208,14 +205,74 @@ public class APIController {
                     "                </div>\n" +
                     "            </div>";
         }
-        System.out.println(res);
+
         return res;
     }
 
-    @GetMapping("/likesong")
-    public String likeSong(Model model) {
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        return name;
+    @GetMapping("/loadmorealbums")
+    public String loadMoreAlbum(@RequestParam int page){
+        System.out.println(page);
+        List<Album> albumListLimit = albumService.findAlbumsLimit(page,6);
+        String res = "";
+        for(Album album : albumListLimit){
+            res += "<div class=\"col-12 col-md-6 col-lg-4\" >";
+            res += "<div class=\"single-event-area mb-30\">";
+            res += "<div class=\"event-thumbnail\">";
+            res += "<img src=\"/img/bg-img/"  + album.getImage() + "\" alt=\"\">";
+            res += "</div>";
+            res += "<div class=\"event-text\">";
+            res += "<h4>" + album.getName() + "</h4>";
+            res += "<div class=\"event-meta-data\">";
+            res += "<a href=\"#\" class=\"event-place\">" + album.getSingerOfAlbum().getStageName() + "</a>";
+            res += "<a href=\"#\" class=\"event-date\" >" + album.getDatePublic() + "</a>";
+            res += "</div>";
+            res += "<a href=\"/album/ "  + album.getId() + " \" class=\"btn see-more-btn\">See Album</a>";
+            res += "</div>";
+            res += "</div>";
+            res += "</div> ";
+        }
+
+        return res;
     }
+
+    @GetMapping("/loadmorecategorys")
+    public String loadMoreCategory(@RequestParam int page){
+        List<Category> categoryListLimit = categoryService.findCategoriesLimit(page,6);
+        String res = "";
+        for(Category category : categoryListLimit){
+            res += "<div class=\"col-12 col-md-6 col-lg-4\">";
+            res += "<div class=\"single-event-area mb-30\" >";
+            res += "<div class=\"event-thumbnail\">";
+            res += "<img src=\"/img/bg-img/" + category.getImage() + "\" alt=\"\">";
+            res += "</div>";
+            res += "<div class=\"event-text\" style=\"width: 100%\">";
+            res += " <h4 >" + category.getName() + "</h4>";
+            res += "<a href=\"/category/"  + category.getId()+ "\" class=\"btn see-more-btn\">See Category</a>";
+            res += "</div>";
+            res += "</div>";
+            res += "</div>";
+        }
+        return res;
+    }
+    @GetMapping("/loadmoresingers")
+    public String loadMoreSinger(@RequestParam int page){
+        List<Singer> singerListLimit = singerService.findSingersLimit(page,6);
+        String res = "";
+        for(Singer singer : singerListLimit){
+            res += "<div class=\"col-12 col-md-6 col-lg-4\"\">";
+            res += "<div class=\"single-event-area mb-30\" >";
+            res += "<div class=\"event-thumbnail\">";
+            res += "<img src=\"/img/bg-img/"  + singer.getImage() + "\" alt=\"\">";
+            res += "</div>";
+            res += "<div class=\"event-text\" style=\"width: 100%\">";
+            res += "<h4>" + singer.getStageName()+ "</h4>";
+            res += "<a href=\"/singer/" + singer.getId() + "\" class=\"btn see-more-btn\">See Artist</a>";
+            res += "</div>";
+            res += "</div>";
+            res += " </div>";
+        }
+        return res;
+    }
+
 
 }

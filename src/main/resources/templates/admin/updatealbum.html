@@ -124,7 +124,7 @@
             var idAlbum = $(this).closest('tr').find('.data-id-album').text();
             $.ajax({
                 url: "/api/delete/album",
-                type : "get",
+                type : "delete",
                 data : {
                     idAlbum : idAlbum,
                 },
