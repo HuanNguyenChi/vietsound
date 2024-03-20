@@ -43,6 +43,8 @@ public class DashboardController {
         model.addAttribute("userList",userList);
         return "admin/authority";
     }
+
+    // Admin Page
     @GetMapping("/")
     public String admin(Model model) {
         List<Singer> singerList = singerService.findAll();
@@ -59,6 +61,8 @@ public class DashboardController {
         model.addAttribute("songListLimit",songListLimit);
         return "admin/dashboard";
     }
+
+    //song page
     @GetMapping("/addsong")
     public String addSong(Model model){
         List<Album> albumList = albumService.findAll();
@@ -69,17 +73,17 @@ public class DashboardController {
         model.addAttribute("categoryList",categoryList);
         return "admin/addsong";
     }
+    //category page
     @GetMapping("/addcategory")
     public String addCategory(){
         return "admin/addcategory";
     }
+    //singer page
     @GetMapping("/addsinger")
     public String addSinger(Model model){
-//        List<Category> categoryList = categoryService.findAll();
-//        model.addAttribute("categoryList",categoryList);
         return "admin/addsinger";
     }
-
+    //album page
     @GetMapping("/addalbum")
     public String addAlbum(Model model){
         List<Category> categoryList = categoryService.findAll();
@@ -88,6 +92,8 @@ public class DashboardController {
         model.addAttribute("categoryList",categoryList);
         return "admin/addalbum";
     }
+
+    // save new song
     @PostMapping("/upload/song")
     public String uploadSong(@RequestParam("file") MultipartFile file,
                               @RequestParam("name") String name,
@@ -118,6 +124,7 @@ public class DashboardController {
         songService.save(song);
         return "redirect:/admin/addsong";
     }
+    //save new category
     @PostMapping("/upload/category")
     public String uploadCategory(@RequestParam("file") MultipartFile file,
                              @RequestParam("name") String name,
@@ -134,6 +141,7 @@ public class DashboardController {
         categoryService.save(category);
         return "redirect:/admin/addcategory";
     }
+    //save new singer
     @PostMapping("/upload/singer")
     public String uploadSinger(@RequestParam("file") MultipartFile file,
                                @RequestParam("name") String name,
@@ -152,6 +160,7 @@ public class DashboardController {
         singer.setStageName(stageName);
         return "redirect:/admin/addsinger";
     }
+    //save new album
     @PostMapping("/upload/album")
     public String uploadAlbum(@RequestParam("file") MultipartFile file,
                               @RequestParam("name") String name,
@@ -172,30 +181,42 @@ public class DashboardController {
         albumService.save(album);
         return "redirect:/admin/addalbum";
     }
+    //page update song
     @GetMapping("/updatesong")
     public String updateSong(Model model){
         List<Song> songListLimit = songService.findSongsLimit(0,10);
+        List<Song> songListAll = songService.findAll();
+
         model.addAttribute("songListLimit",songListLimit);
+        if(songListAll.size() % 10 == 0){
+            model.addAttribute("sumPage",songListAll.size()/10);
+        }else{
+            model.addAttribute("sumPage",songListAll.size()/10 + 1);
+        }
         return "admin/updatesong";
     }
+    //page update category
     @GetMapping("/updatecategory")
     public String updateCategory(Model model){
         List<Category> categoryListLimit = categoryService.findCategoriesLimit(0,10);
         model.addAttribute("categoryListLimit",categoryListLimit);
         return "admin/updatecategory";
     }
+    //page update singer
     @GetMapping("/updatesinger")
     public String updateSinger(Model model){
         List<Singer> singerListLimit = singerService.findSingersLimit(0,10);
         model.addAttribute("singerListLimit",singerListLimit);
         return "admin/updatesinger";
     }
+    //page update album
     @GetMapping("/updatealbum")
     public String updateAlbum(Model model){
         List<Album> albumListLimit = albumService.findAlbumsLimit(0,10);
         model.addAttribute("albumListLimit",albumListLimit);
         return "admin/updatealbum";
     }
+    //page update detail song
     @GetMapping("/updatesongdetail/{id}")
     public String updateSongDetail(Model model, @PathVariable("id") int id){
         Song song = songService.findById(id);
@@ -208,12 +229,14 @@ public class DashboardController {
         model.addAttribute("categoryList",categoryList);
         return "admin/updatesongdetail";
     }
+    //page update detail category
     @GetMapping("/updatecategorydetail/{id}")
     public String updateCategoryDetail(Model model, @PathVariable("id") int id){
         Category category = categoryService.findById(id);
         model.addAttribute("category",category);
         return "admin/updatecategorydetail";
     }
+    //page update detail singer
     @GetMapping("/updatesingerdetail/{id}")
     public String updateSingerDetail(Model model, @PathVariable("id") int id){
         Singer singer = singerService.findById(id);
@@ -222,6 +245,7 @@ public class DashboardController {
         model.addAttribute("categoryList",categoryList);
         return "admin/updatesingerdetail";
     }
+    //page update detail album
     @GetMapping("/updatealbumdetail/{id}")
     public String updateAlbumDetail(Model model, @PathVariable("id") int id){
         Album album = albumService.findById(id);
@@ -232,8 +256,8 @@ public class DashboardController {
         model.addAttribute("categoryList",categoryList);
         return "admin/updatealbumdetail";
     }
-
-    @PostMapping("/updatesongdetail/{id}")
+    // update detail song
+    @PutMapping("/updatesongdetail/{id}")
     public String updateSongDetail(@PathVariable("id") int id,
                                    @RequestParam("file") MultipartFile file,
                                    @RequestParam("name") String name,
@@ -273,8 +297,9 @@ public class DashboardController {
         songService.save(song);
         return "redirect:/admin/updatesong";
     }
+    //update detail category
 
-    @PostMapping("/updatecategorydetail/{id}")
+    @PutMapping("/updatecategorydetail/{id}")
     public String updateCategoryDetail(@PathVariable("id") int id,
                                        @RequestParam("file") MultipartFile file,
                                        @RequestParam("name") String name,
@@ -289,7 +314,8 @@ public class DashboardController {
         if(description != category.getDescription()) category.setDescription(description);
         return "redirect:/admin/updatecategorydetail";
     }
-    @PostMapping("/updatesingerdetail/{id}")
+    //update detail singer
+    @PutMapping("/updatesingerdetail/{id}")
     public String updateSingerDetail(@PathVariable("id") int id,
                                      @RequestParam("file") MultipartFile file,
                                      @RequestParam("name") String name,
@@ -309,7 +335,8 @@ public class DashboardController {
         singerService.save(singer);
         return "redirect:/admin/updatesingerdetail";
     }
-    @PostMapping("/updatealbumdetail/{id}")
+    // update detail album
+    @PutMapping("/updatealbumdetail/{id}")
     public String updateAlbumDetail(@PathVariable("id") int id,
                                     @RequestParam("file") MultipartFile file,
                                     @RequestParam("name") String name,

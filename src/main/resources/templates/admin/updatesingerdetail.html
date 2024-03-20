@@ -42,7 +42,7 @@
             <h2>Add New Song Here</h2>
             <p>Please fill all</p>
             <div class="login-form">
-                <form th:action="'/admin/updatesingerdetail/' + ${singer.getId()}" method="post" enctype="multipart/form-data">
+                <form th:action="'/admin/updatesingerdetail/' + ${singer.getId()}" method="put" enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="inputNameOfSinger"><strong>Name of Singer</strong></label>
                         <input type="text" class="form-control" id="inputNameOfSinger" th:value="${singer.getName()}" th:value="${singer.getName()}" name="name">

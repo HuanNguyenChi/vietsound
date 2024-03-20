@@ -40,15 +40,16 @@
     <div class="row" id="data-singer">
       <!-- Single Event Area -->
       <div class="col-12 col-md-6 col-lg-4" th:each="singer : ${singerList}">
-        <div class="single-event-area mb-30" >
-          <div class="event-thumbnail">
-            <img th:src=" '/img/bg-img/' + ${singer.getImage()}" alt="">
+          <div class="single-event-area mb-30" >
+            <div class="event-thumbnail">
+              <img th:src=" '/img/bg-img/' + ${singer.getImage()}" alt="">
+            </div>
+            <div class="event-text" style="width: 100%">
+              <h4 th:text="${singer.getStageName()}"></h4>
+              <a th:href="'/singer/' + ${singer.getId()}" class="btn see-more-btn">See Artist</a>
+            </div>
           </div>
-          <div class="event-text" style="width: 100%">
-            <h4 th:text="${singer.getStageName()}"></h4>
-            <a th:href="'/singer/' + ${singer.getId()}" class="btn see-more-btn">See Artist</a>
-          </div>
-        </div>
+
       </div>
     </div>
   </div>

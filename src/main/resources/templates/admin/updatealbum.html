@@ -40,11 +40,15 @@
     <div class="container" style="margin: 50px;padding: 50px">
         <div class="row" >
             <h2>Update Album Here</h2>
+            <form >
+                <input placeholder="Search here...." style="display: inline-block;width: 400px;margin: 15px 0px;height: 36px;">
+                <button type="submit" class="btn btn-outline-light" >Search</button>
+            </form>
             <div class="container">
                 <div class="row">
                     <!--table album Hit-->
-                    <div>
-                        <table class="table table-responsive-lg table-bordered" style="width: 100%">
+                    <div class="table-container">
+                        <table class="table table-responsive-lg table-bordered" style="width: 100%" id="table-album">
                             <thead>
                             <tr>
                                 <td>ID</td>
@@ -56,25 +60,35 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <div th:each="album : ${albumListLimit}">
-                                <tr>
-                                    <td th:text="${album.getId()}" th:value="${album.getId()}" class="data-id-album"></td>
-                                    <td th:text="${album.getName()}"></td>
-                                    <td th:text="${album.getDatePublic()}"></td>
-                                    <td th:text="${album.getLikes()}"></td>
-                                    <td th:text="${album.getDislikes()}"></td>
-                                    <td style="padding-right: 0px; margin-right: 0px">
-                                        <a th:href="'/admin/updatealbumdetail/' + ${album.getId()}">
-                                            <i class="fa fa-eye fa-eyedropper" style="color: black"></i>
-                                        </a>
-                                        <span type="button" class="btn-delete-album">
-                                        <i class="fa fa-trash" style="margin-left: 10px"></i>
-                                    </span>
-                                    </td>
-                                </tr>
-                            </div>
+                                <div th:each="album : ${albumListLimit}">
+                                    <tr>
+                                        <td th:text="${album.getId()}" th:value="${album.getId()}" class="data-id-album"></td>
+                                        <td th:text="${album.getName()}"></td>
+                                        <td th:text="${album.getDatePublic()}"></td>
+                                        <td th:text="${album.getLikes()}"></td>
+                                        <td th:text="${album.getDislikes()}"></td>
+                                        <td style="padding-right: 0px; margin-right: 0px">
+                                            <a th:href="'/admin/updatealbumdetail/' + ${album.getId()}">
+                                                <span class=" btn btn-success" >Edit</span>
+                                            </a>
+                                            <span type="button" class="btn-delete-album">
+                                                <span class="btn btn-danger" style="margin-left: 10px;">Delete</span>
+                                            </span>
+                                        </td>
+                                    </tr>
+                                </div>
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            <ul class="pagination" th:each="index : ${#numbers.sequence(1,sumPage)}" style="display: inline-block">
+                                <div th:if="${index == 1}" style="display: inline-block">
+                                    <li class="paging-item active btn" style="padding:5px 10px;"><a th:text="${index}"></a></li>
+                                </div>
+                                <div th:if="${index != 1}" style="display: inline-block">
+                                    <li class="paging-item btn" style="padding:5px 10px;"><a th:text="${index}"></a></li>
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -120,10 +134,28 @@
 <script th:src="@{/js/customjs.js}"></script>
 <script>
     $(document).ready(function (){
+        $("body").on("click",".paging-item",function (){
+            $(".paging-item").removeClass("active");
+            $(this).addClass("active");
+            var page = $(this).text();
+            alert(page);
+            $.ajax({
+                url : "/api/getalbumlimitpaging",
+                type : "get",
+                data : {
+                    page : page,
+                },
+                success : function (value){
+                    var table_bill = $("#table-album").find("tbody");
+                    table_bill.empty();
+                    table_bill.append(value);
+                }
+            })
+        })
         $('.btn-delete-album').click(function (){
             var idAlbum = $(this).closest('tr').find('.data-id-album').text();
             $.ajax({
-                url: "/api/delete/album",
+                url: "/api/admin/v1/delete/album",
                 type : "delete",
                 data : {
                     idAlbum : idAlbum,

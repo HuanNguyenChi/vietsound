@@ -1,5 +1,7 @@
 package com.huannguyen.vietsound.service.impl;
 
+import com.huannguyen.vietsound.entity.Album;
+import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.entity.Song;
 import com.huannguyen.vietsound.repo.SongRepo;
 import com.huannguyen.vietsound.service.SongService;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -43,5 +46,18 @@ public class SongServiceImpl implements SongService {
     @Override
     public void delete(int id) {
         songRepo.deleteSongById(id);
+    }
+
+    @Override
+    public List<Song> findSongsBySingerOfSongLimit(Singer singer, int page, int size) {
+        List<Song> songList = songRepo.findSongsBySingerOfSong(singer);
+        List<Song> res = new ArrayList<>();
+        int cnt = 0;
+        int end = (page+1) * size;
+        if(songList.size() < end) end = songList.size();
+        for(int index=page*size; index < end ; index++){
+            res.add(songList.get(index));
+        }
+        return res;
     }
 }

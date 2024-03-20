@@ -130,38 +130,6 @@
 <script th:src="@{/js/active.js}"></script>
 <!--custom js-->
 <script th:src="@{/js/customjs.js}"></script>
-<script>
-  $(document).ready(function (){
-    $('#btn-userUpdateInfo').click(function (){
-      var fullname = document.getElementById('fullname').value;
-      var email = document.getElementById('email').value;
-      var phone = document.getElementById('phone').value;
-      var address = document.getElementById('address').value;
-      var dataIdSpan = document.getElementById('data-id');
-      var username = dataIdSpan.innerText;
-      alert(fullname + username);
-      $.ajax({
-        url : "/api/user/updateinfo/",
-        type : "post",
-        data : {
-          username : username,
-          fullname : fullname,
-          email : email,
-          phone : phone,
-          address : address
-        },
-        success : function (value){
-          if(value == "true"){
-            linkCurrent = window.location.href;
-            linkReplace = linkCurrent.replace("/user/updateinfo/"+username,"/user/" + username);
-            alert("/user/" + username);
-            window.location = linkReplace;
-          }
-        }
-      })
-    })
-  })
-</script>
 </body>
 
 </html>

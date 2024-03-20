@@ -13,4 +13,5 @@ public interface AlbumService {
     List<Album> findAlbumsLimit(int page, int size);
     Album save(Album album);
     void delete(int id);
+    List<Album> findAlbumsBySingerOfAlbumLimit(Singer singer,int page, int size);
 }

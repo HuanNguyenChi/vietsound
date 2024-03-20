@@ -26,3 +26,14 @@ body {
     margin-left: 250px; /* Đặt cùng chiều rộng như thanh bên */
     padding: 20px; /* Thêm một số lề cho nội dung */
 }
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pagination li {
+    display: inline-block;
+    margin-right: 10px; /* Khoảng cách giữa các ô */
+    margin-top: 20px;
+    border: 1px solid;
+}

@@ -29,23 +29,23 @@ public class APIController {
     private StorageService storageService;
     @Autowired
     private RoleService roleService;
-    @DeleteMapping("/delete/category")
+    @DeleteMapping("/admin/v1/delete/category")
     public String deleteCategory(@RequestParam("idCategory") int id){
         categoryService.delete(id);
         return "true";
     }
-    @DeleteMapping("/delete/album")
+    @DeleteMapping("/admin/v1/delete/album")
     public String deleteAlbum(@RequestParam("idAlbum") int id){
         albumService.delete(id);
         return "true";
     }
-    @DeleteMapping("/delete/singer")
+    @DeleteMapping("/admin/v1/delete/singer")
     public String deleteSinger(@RequestParam("idSinger") int id){
         singerService.delete(id);
         return "true";
     }
 
-    @DeleteMapping("/deleteuser")
+    @DeleteMapping("/admin/v1/deleteuser")
     public String deleteUserByAdmin(@RequestParam("id") int id){
         User user = userService.findById(id);
         user.getAlbumList().clear();
@@ -56,7 +56,7 @@ public class APIController {
         userService.delete(id);
         return "true";
     }
-    @GetMapping("/updateroleforuser")
+    @PostMapping("/admin/v1/updateroleforuser")
     public String updateRoleForUser(@RequestParam("id") int id,
                                     @RequestParam("role") String role,
                                     @RequestParam("isChecked") String isChecked) {
@@ -89,42 +89,42 @@ public class APIController {
         return "true";
     }
 
-    @DeleteMapping("/delete/song")
+    @DeleteMapping("/admin/v1/delete/song")
     public String deleteSong(@RequestParam("idSong") int id) {
         songService.delete(id);
         return "true";
     }
 
-    @PostMapping("/upload/song")
-    public String uploadImage(@RequestParam("file") MultipartFile file,
-                              @RequestParam("name") String name,
-                              @RequestParam("link") String link,
-                              @RequestParam("dateRelease") String dateRelease,
-                              @RequestParam("album") int albumId,
-                              @RequestParam("singer") int singerId,
-                              @RequestParam("category") int categoryId,
-                              @RequestParam("content") String content) {
-        storageService.store(file);
-        String image = file.getOriginalFilename();
-        Song song = new Song();
-        song.setImage(image);
-        song.setContent(content);
-        song.setDislikes(0);
-        song.setLikes(0);
-        song.setDateRelease(dateRelease);
-        song.setListens(0);
-        song.setUserLikedSong(new ArrayList<>());
-        song.setName(name);
-        song.setLink(link);
-        song.setAlbum(albumService.findById(albumId));
-        song.setCategoryOfSong(categoryService.findById(categoryId));
-        song.setSingerOfSong(singerService.findById(singerId));
-        Song song1 = songService.save(song);
-        if (song1 == null) return "false";
-        return "true";
-    }
+//    @PostMapping("/upload/song")
+//    public String uploadImage(@RequestParam("file") MultipartFile file,
+//                              @RequestParam("name") String name,
+//                              @RequestParam("link") String link,
+//                              @RequestParam("dateRelease") String dateRelease,
+//                              @RequestParam("album") int albumId,
+//                              @RequestParam("singer") int singerId,
+//                              @RequestParam("category") int categoryId,
+//                              @RequestParam("content") String content) {
+//        storageService.store(file);
+//        String image = file.getOriginalFilename();
+//        Song song = new Song();
+//        song.setImage(image);
+//        song.setContent(content);
+//        song.setDislikes(0);
+//        song.setLikes(0);
+//        song.setDateRelease(dateRelease);
+//        song.setListens(0);
+//        song.setUserLikedSong(new ArrayList<>());
+//        song.setName(name);
+//        song.setLink(link);
+//        song.setAlbum(albumService.findById(albumId));
+//        song.setCategoryOfSong(categoryService.findById(categoryId));
+//        song.setSingerOfSong(singerService.findById(singerId));
+//        Song song1 = songService.save(song);
+//        if (song1 == null) return "false";
+//        return "true";
+//    }
 
-    @PostMapping("/user/updateinfo/")
+    @PutMapping("/user/v1/updateinfo/")
     public String userUpdateInfo(@RequestParam("username") String username,
                                  @RequestParam("fullname") String fullname,
                                  @RequestParam("address") String address,
@@ -140,7 +140,7 @@ public class APIController {
         return "false";
     }
 
-    @GetMapping("/user/addsongtouser")
+    @PutMapping("/user/v1/addsongtouser")
     public String addSongToUser(@RequestParam("idMusic") int idMusic, Principal principal){
         if(principal != null){
             User user = userService.findByUsername(principal.getName());
@@ -155,7 +155,7 @@ public class APIController {
         }
         return "Success";
     }
-    @GetMapping("/user/addsingertouser")
+    @PutMapping("/user/v1/addsingertouser")
     public String addSingerToUser(@RequestParam("idSinger") int idSinger, Principal principal){
         if(principal != null){
             User user = userService.findByUsername(principal.getName());
@@ -170,12 +170,8 @@ public class APIController {
         }
         return "Success";
     }
-    @GetMapping("/user/removesongtouser")
-    public String removeSongToUser(@RequestParam("idSong") int idSong, Principal principal){
-        User user = userService.findByUsername(principal.getName());
-        userService.update(userService.removeSongInUser(user,idSong));
-        return "success";
-    }
+
+    //API load more for user
     @GetMapping(path = "/loadmoresongs")
     public String loadMoreSong(Model model, @RequestParam int page) {
         List<Song> songList = songService.findSongsLimit(page, 8);
@@ -208,7 +204,6 @@ public class APIController {
 
         return res;
     }
-
     @GetMapping("/loadmorealbums")
     public String loadMoreAlbum(@RequestParam int page){
         System.out.println(page);
@@ -234,7 +229,6 @@ public class APIController {
 
         return res;
     }
-
     @GetMapping("/loadmorecategorys")
     public String loadMoreCategory(@RequestParam int page){
         List<Category> categoryListLimit = categoryService.findCategoriesLimit(page,6);
@@ -259,6 +253,7 @@ public class APIController {
         List<Singer> singerListLimit = singerService.findSingersLimit(page,6);
         String res = "";
         for(Singer singer : singerListLimit){
+
             res += "<div class=\"col-12 col-md-6 col-lg-4\"\">";
             res += "<div class=\"single-event-area mb-30\" >";
             res += "<div class=\"event-thumbnail\">";
@@ -270,9 +265,167 @@ public class APIController {
             res += "</div>";
             res += "</div>";
             res += " </div>";
+
         }
         return res;
     }
 
+    // API remove
+    @PutMapping("/user/v1/removesongfromuser")
+    public String removeSongFromUser(@RequestParam int idSong, Principal principal){
+        User user = userService.findByUsername(principal.getName());
+        userService.update(userService.removeSongInUser(user,idSong));
+        return "success";
+    }
+
+    //API paging for user
+    @GetMapping("/getsonglimitpaging")
+    public String getSongLimitPaging(@RequestParam int page){
+        List<Song> songList = songService.findSongsLimit(page-1,10);
+        String res = "";
+        for(Song song : songList){
+            res += "<tr>";
+            res += "<td>" + song.getId()+ "</td>";
+            res += "<td >" + song.getName()+ "</td>";
+            res += "<td>" + song.getSingerOfSong().getStageName()+ "</td>";
+            res += "<td>" + song.getListens()+ "</td>";
+            res += "<td>" +  song.getLikes() + "</td>";
+            res += "<td>" + song.getDislikes()+ "</td>";
+            res += "<td style=\"padding-right: 0px; margin-right: 0px\">\n" +
+                    "                                        <a href=\"/admin/song/" + song.getId()+"\">\n" +
+                    "                                            <span class=\" btn btn-success\" >Edit</span>\n" +
+                    "                                        </a>\n" +
+                    "                                        <span type=\"button\" class=\"btn-delete-song\">\n" +
+                    "                                        <span class=\"btn btn-danger\" style=\"margin-left: 10px;\">Delete</span>\n" +
+                    "                                    </span>\n" +
+                    "                                    </td>";
+            res += "</tr>";
+        }
+        System.out.println(res);
+        return res;
+    }
+    @GetMapping("/getsingerlimitpaging")
+    public String getSingerLimitPaging(@RequestParam int page){
+        List<Singer> singerList = singerService.findSingersLimit(page-1,10);
+        String res = "";
+        return res;
+    }
+    @GetMapping("/getcategorylimitpaging")
+    public String getCategoryLimitPaging(@RequestParam int page){
+        List<Category> categoryList = categoryService.findCategoriesLimit(page-1,10);
+        String res = "";
+        return res;
+    }
+    @GetMapping("/getalbumlimitpaging")
+    public String getAlbumLimitPaging(@RequestParam int page){
+        List<Album> albumList = albumService.findAlbumsLimit(page-1,10);
+        String res = "";
+        return res;
+    }
+
+    // API for songdetail page
+    @GetMapping("/user/v1/songdetail/loadmorealbums")
+    public String loadMoreAlbumsInSongDetailPage(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
+        Singer singer = singerService.findById(idSinger);
+        List<Album> albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer,idPage,8);
+        String htmlGenerate = "";
+        for(Album album : albumList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "                <a href=\"/album/" + album.getId()+"\">\n" +
+                    "                    <div class=\"single-album-area\">\n" +
+                    "                        <div class=\"album-thumb\">\n" +
+                    "                            <img src=\"/img/bg-img/" + album.getImage()+"\" alt=\"\">\n" +
+                    "                            <div class=\"play-icon\">\n" +
+                    "                                <a  class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                        <div class=\"album-info\">\n" +
+                    "                            <h5>" + album.getName()+"</h5>\n" +
+                    "                            <p>"+ singer.getStageName()+"</p>\n" +
+                    "                        </div>\n" +
+                    "                    </div>\n" +
+                    "                </a>\n" +
+                    "            </div> \n";
+        }
+        System.out.println(htmlGenerate);
+        return  htmlGenerate;
+    }
+    @GetMapping("/user/v1/songdetail/loadmoresongs")
+    public String loadMoreSongsInSongDetailPage(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
+        Singer singer = singerService.findById(idSinger);
+        List<Song> songList = songService.findSongsBySingerOfSongLimit(singer,idPage,8);
+        String htmlGenerate = "";
+        for(Song song : songList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "                <a href=\"/song/" + song.getId()+"\">\n" +
+                    "                    <div class=\"single-album-area\">\n" +
+                    "                        <div class=\"album-thumb\">\n" +
+                    "                            <img src=\"/img/bg-img/" + song.getImage()+"\" alt=\"\">\n" +
+                    "                            <div class=\"play-icon\">\n" +
+                    "                                <a  class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                        <div class=\"album-info\">\n" +
+                    "                            <h5>" + song.getName()+"</h5>\n" +
+                    "                            <p>"+ singer.getStageName()+"</p>\n" +
+                    "                        </div>\n" +
+                    "                    </div>\n" +
+                    "                </a>\n" +
+                    "            </div> \n";
+        }
+        System.out.println(htmlGenerate);
+        return  htmlGenerate;
+    }
+    @GetMapping("/user/v1/singerdetail/loadmoresongs")
+    public String loadMoreSongsInSingerDetail(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
+        String htmlGenerate = "";
+        Singer singer = singerService.findById(idSinger);
+        List<Song> songList = songService.findSongsBySingerOfSongLimit(singer,idPage,8);
+        for(Song song : songList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "          <a th:href=\"'/song/'" + song.getId()+ "\">\n" +
+                    "            <div class=\"single-album-area\">\n" +
+                    "              <div class=\"album-thumb\">\n" +
+                    "                <img src=\"/img/bg-img/"+song.getImage()+"\" alt=\"img-category\">\n" +
+                    "                <div class=\"play-icon\">\n" +
+                    "                  <a class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                </div>\n" +
+                    "              </div>\n" +
+                    "              <div class=\"album-info\">\n" +
+                    "                <h5>" + song.getName()+"\"></h5>\n" +
+                    "                <p>" + song.getSingerOfSong().getStageName()+"\"></p>\n" +
+                    "              </div>\n" +
+                    "            </div>\n" +
+                    "          </a>\n" +
+                    "        </div>\n";
+        }
+        return htmlGenerate;
+    }
+
+    @GetMapping("/user/v1/singerdetail/loadmorealbums")
+    public String loadMoreAlbumsInSingerDetail(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
+        String htmlGenerate = "";
+        Singer singer = singerService.findById(idSinger);
+        List<Album> albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer,idPage,8);
+        for(Album album:  albumList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "  <a href=\"/song/" + album.getId()+"\">\n" +
+                    "    <div class=\"single-album-area\">\n" +
+                    "      <div class=\"album-thumb\">\n" +
+                    "        <img src=\" /img/bg-img/" + album.getImage()+"\" alt=\"img-category\">\n" +
+                    "        <div class=\"play-icon\">\n" +
+                    "          <a class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "        </div>\n" +
+                    "      </div>\n" +
+                    "      <div class=\"album-info\">\n" +
+                    "        <h5 >"+ album.getName()+"\"></h5>\n" +
+                    "        <p>" + singer.getStageName()+ "\"></p>\n" +
+                    "      </div>\n" +
+                    "    </div>\n" +
+                    "  </a>\n" +
+                    "</div>\n";
+        }
+        return htmlGenerate;
+    }
 
 }

@@ -1,5 +1,7 @@
 package com.huannguyen.vietsound.repo;
 
+import com.huannguyen.vietsound.entity.Album;
+import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.entity.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,4 +21,7 @@ public interface SongRepo extends JpaRepository<Song,Integer> {
 
     @Transactional
     void deleteSongById(int id);
+
+    @Query(value = "select a from Song  a where a.singerOfSong = :singer")
+    List<Song> findSongsBySingerOfSong(Singer singer);
 }

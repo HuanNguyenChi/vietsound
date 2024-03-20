@@ -40,18 +40,22 @@
     <div class="container" style="margin: 50px;padding: 50px">
         <div class="row" >
             <h2>Update Singer Here</h2>
+            <form >
+                <input placeholder="Search here...." style="display: inline-block;width: 400px;margin: 15px 0px;height: 36px;">
+                <button type="submit" class="btn btn-outline-light" >Search</button>
+            </form>
             <div class="container">
                 <div class="row">
                     <!--table Song Hit-->
                     <div>
-                        <table class="table table-responsive-lg table-bordered" style="width: 100%">
+                        <table class="table table-responsive-lg table-bordered" style="width: 100%" id="table-singer">
                             <thead>
                             <tr>
                                 <td>ID</td>
                                 <td>Full Name</td>
                                 <td>Stage Name</td>
                                 <td>Debut</td>
-                                <td>Story</td>
+<!--                                <td>Story</td>-->
                                 <td></td>
                             </tr>
                             </thead>
@@ -62,19 +66,29 @@
                                     <td th:text="${singer.getName()}"></td>
                                     <td th:text="${singer.getStageName()}"></td>
                                     <td th:text="${singer.getDebut()}"></td>
-                                    <td th:text="${singer.getStory()}"></td>
+<!--                                    <td th:text="${singer.getStory()}"></td>-->
                                     <td style="padding-right: 0px; margin-right: 0px">
                                         <a th:href="'/admin/updatesingerdetail/' + ${singer.getId()}">
-                                            <i class="fa fa-eye fa-eyedropper" style="color: black"></i>
+                                            <span class=" btn btn-success" >Edit</span>
                                         </a>
                                         <span type="button" class="btn-delete-singer">
-                                        <i class="fa fa-trash" style="margin-left: 10px"></i>
-                                    </span>
+                                            <span class="btn btn-danger" style="margin-left: 10px;">Delete</span>
+                                        </span>
                                     </td>
                                 </tr>
                             </div>
                             </tbody>
                         </table>
+                        <div class="text-center">
+                            <ul class="pagination" th:each="index : ${#numbers.sequence(1,sumPage)}" style="display: inline-block">
+                                <div th:if="${index == 1}" style="display: inline-block">
+                                    <li class="paging-item active btn" style="padding:5px 10px;"><a th:text="${index}"></a></li>
+                                </div>
+                                <div th:if="${index != 1}" style="display: inline-block">
+                                    <li class="paging-item btn" style="padding:5px 10px;"><a th:text="${index}"></a></li>
+                                </div>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -121,10 +135,28 @@
 <script th:src="@{/js/customjs.js}"></script>
 <script>
     $(document).ready(function (){
+        $("body").on("click",".paging-item",function (){
+            $(".paging-item").removeClass("active");
+            $(this).addClass("active");
+            var page = $(this).text();
+            alert(page);
+            $.ajax({
+                url : "/api/getsingerlimitpaging",
+                type : "get",
+                data : {
+                    page : page,
+                },
+                success : function (value){
+                    var table_bill = $("#table-singer").find("tbody");
+                    table_bill.empty();
+                    table_bill.append(value);
+                }
+            })
+        })
         $('.btn-delete-singer').click(function (){
             var idSinger = $(this).closest('tr').find('.data-id-singer').text();
             $.ajax({
-                url: "/api/delete/singer",
+                url: "/api/admin/v1/delete/singer",
                 type : "delete",
                 data : {
                     idSinger : idSinger,

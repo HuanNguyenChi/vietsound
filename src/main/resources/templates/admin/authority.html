@@ -130,8 +130,8 @@
             var isChecked = $(this).prop('checked');
             // Thực hiện các hành động bạn muốn khi checkbox được nhấp
             $.ajax({
-                url : "/api/updateroleforuser",
-                type : "get",
+                url : "/api/admin/updateroleforuser",
+                type : "post",
                 data : {
                     id : id,
                     role : role,
@@ -145,8 +145,8 @@
         $('.btn-delete-user').click(function (){
             var id = $(this).closest('tr').find('.data-id-user').text();
             $.ajax({
-                url : "/api/deleteuser",
-                type : "get",
+                url : "/api/admin/deleteuser",
+                type : "delete",
                 data : {
                     id : id,
                 },

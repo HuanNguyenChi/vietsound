@@ -26,17 +26,28 @@ public class DetailController {
     private CategoryService categoryService;
     @Autowired
     private AlbumService albumService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/song/{id}")
     public String getSongById(Model model, @PathVariable("id") int id){
         Song song = songService.findById(id);
         List<Category> categoryList = categoryService.findAll();
+        List<Album> albumList = new ArrayList<>();
+        List<Song> songList = new ArrayList<>();
+        if(albumService.findAlbumsBySingerOfAlbumLimit(song.getSingerOfSong(),0,8).size() > 0){
+            albumList = albumService.findAlbumsBySingerOfAlbumLimit(song.getSingerOfSong(),0,8);
+        }
+        if(songService.findSongsBySingerOfSongLimit(song.getSingerOfSong(),0,8).size() > 0){
+            songList = songService.findSongsBySingerOfSongLimit(song.getSingerOfSong(),0,8);
+        }
+
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("song",song);
         model.addAttribute("singer",song.getSingerOfSong());
-        model.addAttribute("songOfSinger",song.getSingerOfSong().getSongList());
-        model.addAttribute("albumList",song.getSingerOfSong().getAlbumList());
         song.setListens(song.getListens() + 1);
+        model.addAttribute("albumList",albumList);
+        model.addAttribute("songOfSinger",songList);
         songService.save(song);
         return "user/songdetail";
     }
@@ -49,11 +60,11 @@ public class DetailController {
 
         model.addAttribute("categoryList",categoryList);
         model.addAttribute("singer",singer);
-        if(singer.getSongList().size() != 0) {
-            songList = singer.getSongList();
+        if(songService.findSongsBySingerOfSongLimit(singer,0,8).size() > 0) {
+            songList = songService.findSongsBySingerOfSongLimit(singer,0,8);
         }
-        if(singer.getAlbumList().size() != 0){
-            albumList = singer.getAlbumList();
+        if(albumService.findAlbumsBySingerOfAlbumLimit(singer,0,8).size() > 0){
+            albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer,0,8);
         }
         model.addAttribute("songOfSinger",songList);
         model.addAttribute("albumList",albumList);
