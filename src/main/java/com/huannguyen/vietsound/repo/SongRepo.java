@@ -1,6 +1,7 @@
 package com.huannguyen.vietsound.repo;
 
 import com.huannguyen.vietsound.entity.Album;
+import com.huannguyen.vietsound.entity.Category;
 import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.entity.Song;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,4 +25,9 @@ public interface SongRepo extends JpaRepository<Song,Integer> {
 
     @Query(value = "select a from Song  a where a.singerOfSong = :singer")
     List<Song> findSongsBySingerOfSong(Singer singer);
+    @Query(value = "select s from  Song s where s.categoryOfSong = :category")
+    List<Song> findSongsByCategoryOfSong(Category category);
+
+    @Query(value = "select s from  Song s where s.album = :album")
+    List<Song> findSongsByAlbum(Album album);
 }

@@ -1,5 +1,7 @@
 package com.huannguyen.vietsound.service;
 
+import com.huannguyen.vietsound.entity.Album;
+import com.huannguyen.vietsound.entity.Category;
 import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.entity.Song;
 import org.springframework.data.domain.Pageable;
@@ -15,4 +17,6 @@ public interface SongService {
     Song save(Song song);
     void delete(int id);
     List<Song> findSongsBySingerOfSongLimit(Singer singer,int page, int size);
+    List<Song> findSongsByCategoryOfSongLimit(Category category, int page, int size);
+    List<Song> findSongsByAlbumLimit(Album album,int page,int size);
 }

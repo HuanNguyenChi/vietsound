@@ -88,42 +88,11 @@ public class APIController {
         userService.update(user);
         return "true";
     }
-
     @DeleteMapping("/admin/v1/delete/song")
     public String deleteSong(@RequestParam("idSong") int id) {
         songService.delete(id);
         return "true";
     }
-
-//    @PostMapping("/upload/song")
-//    public String uploadImage(@RequestParam("file") MultipartFile file,
-//                              @RequestParam("name") String name,
-//                              @RequestParam("link") String link,
-//                              @RequestParam("dateRelease") String dateRelease,
-//                              @RequestParam("album") int albumId,
-//                              @RequestParam("singer") int singerId,
-//                              @RequestParam("category") int categoryId,
-//                              @RequestParam("content") String content) {
-//        storageService.store(file);
-//        String image = file.getOriginalFilename();
-//        Song song = new Song();
-//        song.setImage(image);
-//        song.setContent(content);
-//        song.setDislikes(0);
-//        song.setLikes(0);
-//        song.setDateRelease(dateRelease);
-//        song.setListens(0);
-//        song.setUserLikedSong(new ArrayList<>());
-//        song.setName(name);
-//        song.setLink(link);
-//        song.setAlbum(albumService.findById(albumId));
-//        song.setCategoryOfSong(categoryService.findById(categoryId));
-//        song.setSingerOfSong(singerService.findById(singerId));
-//        Song song1 = songService.save(song);
-//        if (song1 == null) return "false";
-//        return "true";
-//    }
-
     @PutMapping("/user/v1/updateinfo/")
     public String userUpdateInfo(@RequestParam("username") String username,
                                  @RequestParam("fullname") String fullname,
@@ -139,7 +108,6 @@ public class APIController {
         if (x != null) return "true";
         return "false";
     }
-
     @PutMapping("/user/v1/addsongtouser")
     public String addSongToUser(@RequestParam("idMusic") int idMusic, Principal principal){
         if(principal != null){
@@ -271,14 +239,14 @@ public class APIController {
     }
 
     // API remove
-    @PutMapping("/user/v1/removesongfromuser")
+    @DeleteMapping("/user/v1/removesongfromuser")
     public String removeSongFromUser(@RequestParam int idSong, Principal principal){
         User user = userService.findByUsername(principal.getName());
         userService.update(userService.removeSongInUser(user,idSong));
         return "success";
     }
 
-    //API paging for user
+    //API paging for admin
     @GetMapping("/getsonglimitpaging")
     public String getSongLimitPaging(@RequestParam int page){
         List<Song> songList = songService.findSongsLimit(page-1,10);
@@ -323,7 +291,7 @@ public class APIController {
         return res;
     }
 
-    // API for songdetail page
+    // API for song detail
     @GetMapping("/user/v1/songdetail/loadmorealbums")
     public String loadMoreAlbumsInSongDetailPage(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
         Singer singer = singerService.findById(idSinger);
@@ -376,6 +344,8 @@ public class APIController {
         System.out.println(htmlGenerate);
         return  htmlGenerate;
     }
+
+    // API for singer detail
     @GetMapping("/user/v1/singerdetail/loadmoresongs")
     public String loadMoreSongsInSingerDetail(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
         String htmlGenerate = "";
@@ -401,7 +371,6 @@ public class APIController {
         }
         return htmlGenerate;
     }
-
     @GetMapping("/user/v1/singerdetail/loadmorealbums")
     public String loadMoreAlbumsInSingerDetail(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
         String htmlGenerate = "";
@@ -409,7 +378,7 @@ public class APIController {
         List<Album> albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer,idPage,8);
         for(Album album:  albumList){
             htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
-                    "  <a href=\"/song/" + album.getId()+"\">\n" +
+                    "  <a href=\"/album/" + album.getId()+"\">\n" +
                     "    <div class=\"single-album-area\">\n" +
                     "      <div class=\"album-thumb\">\n" +
                     "        <img src=\" /img/bg-img/" + album.getImage()+"\" alt=\"img-category\">\n" +
@@ -428,4 +397,177 @@ public class APIController {
         return htmlGenerate;
     }
 
+    // API for category detail
+    @GetMapping("/user/v1/categorydetail/loadmoresongs")
+    public String loadMoreSongsInCategoryDetail(@RequestParam("idPage") int idPage,@RequestParam("idCategory") int idCategory){
+        String htmlGenerate = "";
+        Category category = categoryService.findById(idCategory);
+        List<Song> songList = songService.findSongsByCategoryOfSongLimit(category,idPage,8);
+        for(Song song : songList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "                    <a href=\"/song/" + song.getId()+ "\">\n" +
+                    "                        <div class=\"single-album-area\">\n" +
+                    "                            <div class=\"album-thumb\">\n" +
+                    "                                <img src=\"/img/bg-img/" + song.getImage()+ "\" alt=\"img-category\">\n" +
+                    "                                <div class=\"play-icon\">\n" +
+                    "                                    <a  class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"album-info\">\n" +
+                    "                                <h5>" + song.getName()+ "</h5>\n" +
+                    "                                <p>" + song.getSingerOfSong().getStageName()+"</p>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n" +
+                    "                </div>\n";
+        }
+        System.out.println(htmlGenerate);
+        return htmlGenerate;
+    }
+    @GetMapping("/user/v1/categorydetail/loadmorealbums")
+    public String loadMoreAlbumsInCategoryDetail(@RequestParam("idPage") int idPage,@RequestParam("idCategory") int idCategory){
+        String htmlGenerate = "";
+        Category category = categoryService.findById(idCategory);
+        List<Album> albumList = albumService.findAlbumsByCategoryOfAlbum(category,idPage,8);
+        for(Album album : albumList){
+            htmlGenerate += " <div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "                    <a href=\"/album/" + album.getId()+"\">\n" +
+                    "                        <div class=\"single-album-area\">\n" +
+                    "                            <div class=\"album-thumb\">\n" +
+                    "                                <img src=\"/img/bg-img/" + album.getImage()+"\" alt=\"img-category\">\n" +
+                    "                                <div class=\"play-icon\">\n" +
+                    "                                    <a  class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"album-info\">\n" +
+                    "                                <h5 >"+ album.getName()+ "</h5>\n" +
+                    "                                <p >" + album.getSingerOfAlbum().getName()+"</p>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n" +
+                    "                </div>\n";
+        }
+        System.out.println(htmlGenerate);
+        return htmlGenerate;
+    }
+
+    // API for top hit
+    @GetMapping("/user/v1/tophit/loadmoresongs")
+    public String loadMoreSongsInTopHit(@RequestParam("idPage") int idPage){
+        String htmlGenerate = "";
+        List<Song> songList = songService.findSongsLimit(idPage,12);
+        for(Song song : songList){
+            htmlGenerate +=  "               <div class=\"col-12 col-sm-4 col-md-3 col-lg-2 single-album-item t c p\">\n" +
+                    "                          <a href=\"/song/"+ song.getId()+"\">\n" +
+                    "                        <div class=\"single-album\">\n" +
+                    "                            <img src=\"/img/bg-img/" + song.getImage()+"\" alt=\"img\">\n" +
+                    "                            <div class=\"album-info\">\n" +
+                    "                                <h5 >" + song.getName()+"</h5>\n" +
+                    "                                <p >" + song.getSingerOfSong().getStageName()+"\"></p>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                </a>\n" +
+                    "                    </div>\n";
+
+
+        }
+        return  htmlGenerate;
+    }
+    @GetMapping("/user/v1/tophit/loadmorealbums")
+    public String loadMoreAlbumsInTopHit(@RequestParam("idPage") int idPage){
+        String htmlGenerate = "";
+        List<Album> albumList = albumService.findAlbumsLimit(idPage,6);
+        for (Album album : albumList){
+            htmlGenerate +=
+                    "                    <div class=\"col-12 col-sm-4 col-md-3 col-lg-2 single-album-item t c p\">\n" +
+                    "<a href=\"/album/" + album.getId()+"\">\n" +
+                    "                        <div class=\"single-album\">\n" +
+                    "                            <img src=\"/img/bg-img/" + album.getImage()+"\" alt=\"img\">\n" +
+                    "                            <div class=\"album-info\">\n" +
+                    "                                <a href=\"/album/"+ album.getId()+"\">\n" +
+                    "                                    <h5 >"+ album.getName()+"\"></h5>\n" +
+                    "                                </a>\n" +
+                    "                                <p>" + album.getSingerOfAlbum().getStageName()+"\"></p>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                            "                </a>\n"+
+                    "                    </div>\n" ;
+
+        }
+        return  htmlGenerate;
+    }
+    @GetMapping("/user/v1/tophit/loadmorecategorys")
+    public String loadMoreCategorysInTopHit(@RequestParam("idPage") int idPage){
+        String htmlGenerate = "";
+        List<Category> categoryList = categoryService.findCategoriesLimit(idPage,6);
+        for (Category category : categoryList){
+            htmlGenerate += "<div class=\"col-12 col-sm-4 col-md-3 col-lg-2 single-album-item t c p\">\n" +
+                    "                <div class=\"single-album\">\n" +
+                    "                    <img src=\"/img/bg-img/" + category.getImage()+"\" alt=\"img\">\n" +
+                    "                    <div class=\"album-info\">\n" +
+                    "                        <a href=\"/album/" + category.getId()+"\">\n" +
+                    "                            <h5>"+category.getName()+"\"></h5>\n" +
+                    "                        </a>\n" +
+                    "                        <p >" +category.getPopularity()+"\"></p>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>\n";
+
+        }
+        return  htmlGenerate;
+    }
+
+    // API for album detail
+    @GetMapping("/user/v1/albumdetail/loadmoresongs")
+    public String loadMoreSongsInAlbumDetail(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger,@RequestParam("idAlbum") int idAlbum){
+        String htmlGenerate = "";
+        Album album = albumService.findById(idAlbum);
+        List<Song> songList = songService.findSongsByAlbumLimit(album,idPage,8);
+        for(Song song : songList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "                        <a href=\"/song/" + album.getId()+"\">\n" +
+                    "                            <div class=\"single-album-area\">\n" +
+                    "                                <div class=\"album-thumb\">\n" +
+                    "                                    <img src=\" /img/bg-img/" + song.getImage()+"\" alt=\"img-category\">\n" +
+                    "                                    <div class=\"play-icon\">\n" +
+                    "                                        <a  class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                                    </div>\n" +
+                    "                                </div>\n" +
+                    "                                <div class=\"album-info\">\n" +
+                    "                                    <h5 >"+song.getName()+"\"></h5>\n" +
+                    "                                    <p>"+song.getSingerOfSong().getStageName()+"\"></p>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                        </a>\n" +
+                    "                    </div>\n";
+        }
+        System.out.println(htmlGenerate);
+        return  htmlGenerate;
+    }
+    @GetMapping("/user/v1/albumdetail/loadmorealbums")
+    public String loadMoreAlbumsInAlbumDetail(@RequestParam("idPage") int idPage,@RequestParam("idSinger") int idSinger){
+        String htmlGenerate = "";
+        Singer singer = singerService.findById(idSinger);
+        List<Album> albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer,idPage,4);
+        for (Album album : albumList){
+            htmlGenerate += "<div class=\"col-12 col-sm-6 col-md-3\">\n" +
+                    "                    <a href=\"/album/"+album.getId()+"\">\n" +
+                    "                        <div class=\"single-album-area\">\n" +
+                    "                            <div class=\"album-thumb\">\n" +
+                    "                                <img src=\" /img/bg-img/" + album.getImage()+"\" alt=\"img-category\">\n" +
+                    "                                <div class=\"play-icon\">\n" +
+                    "                                    <a  class=\"video--play--btn\"><span class=\"icon-play-button\"></span></a>\n" +
+                    "                                </div>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"album-info\">\n" +
+                    "                                <h5 >"+album.getName()+"</h5>\n" +
+                    "                                <p >"+singer.getStageName()+"</p>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                    </a>\n" +
+                    "                </div>\n";
+        }
+        System.out.println(htmlGenerate);
+        return  htmlGenerate;
+    }
 }

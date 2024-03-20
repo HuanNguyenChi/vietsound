@@ -55,6 +55,8 @@ $(document).ready(function(){
             }
         })
     })
+
+    // jQuery for user home
     $(".btn-dislike").click(function (){
         var parentDislike = $(this).closest(".featured-artist-content");
         var idSong = parentDislike.find(".data-id-song-detail-user").text();
@@ -71,6 +73,8 @@ $(document).ready(function(){
             }
         })
     })
+
+    // jQuery for user update info
     $('#btn-userUpdateInfo').click(function (){
         var fullname = document.getElementById('fullname').value;
         var email = document.getElementById('email').value;
@@ -99,4 +103,129 @@ $(document).ready(function(){
             }
         })
     })
+
+    // jquery for top hit
+    $('#btn-tophit-get-song').click(function (){
+        var idPage = parseInt($(this).attr("data-page"));
+        $.ajax({
+            url : "/api/user/v1/tophit/loadmoresongs",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+                // idCategory : valueCategoryId,
+            },
+            success : function (value){
+                // alert(value)
+                $("#data-song-in-tophit-page").append(value);
+                $("#btn-tophit-get-song").attr("data-page",idPage + 1);
+            }
+        })
+    })
+    $('#btn-tophit-get-album').click(function (){
+        var idPage = parseInt($(this).attr("data-page"));
+        $.ajax({
+            url : "/api/user/v1/tophit/loadmorealbums",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+            },
+            success : function (value){
+                // alert(value)
+                $("#data-album-in-tophit-page").append(value);
+                $("#btn-tophit-get-album").attr("data-page",idPage + 1);
+            }
+        })
+    })
+    $('#btn-tophit-get-category').click(function (){
+        var idPage = parseInt($(this).attr("data-page"));
+        $.ajax({
+            url : "/api/user/v1/tophit/loadmorecategorys",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+            },
+            success : function (value){
+                $("#data-category-in-tophit-page").append(value);
+                $("#btn-tophit-get-category").attr("data-page",idPage + 1);
+            }
+        })
+    })
+
+    // jQuery for singer detail
+
+    $('#btn-singer-detail-get-song').click(function (){
+        var valueSingerId = $("#value-singer-id-in-singer-detail").text();
+        var idPage = parseInt($(this).attr("data-page"));
+        alert(valueSingerId + " " + idPage)
+        $.ajax({
+            url : "/api/user/v1/singerdetail/loadmoresongs",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+                idSinger : valueSingerId,
+            },
+            success : function (value){
+                // alert(value)
+                $("#data-song-in-singer-detail-page").append(value);
+                $("#btn-singer-detail-get-song").attr("data-page",idPage + 1);
+            }
+        })
+    })
+    $('#btn-singer-detail-get-album').click(function (){
+        var valueSingerId = $("#value-singer-id-in-singer-detail").text();
+        var idPage = parseInt($(this).attr("data-page"));
+        alert(valueSingerId + " " + idPage)
+        $.ajax({
+            url : "/api/user/v1/singerdetail/loadmorealbums",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+                idSinger : valueSingerId,
+            },
+            success : function (value){
+                // alert(value)
+                $("#data-album-in-singer-detail-page").append(value);
+                $("#btn-singer-detail-get-album").attr("data-page",idPage + 1);
+            }
+        })
+    })
+
+    // jQuery for song detail
+    $('#btn-song-detail-get-album').click(function (){
+        var valueSingerId = $("#value-singer-id").text();
+        var idPage = parseInt($(this).attr("data-page"));
+        alert(valueSingerId + " " + idPage)
+        $.ajax({
+            url : "/api/user/v1/songdetail/loadmorealbums",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+                idSinger : valueSingerId,
+            },
+            success : function (value){
+                // alert(value)
+                $("#data-album-in-song-detail-page").append(value);
+                $("#btn-song-detail-get-album").attr("data-page",idPage + 1);
+            }
+        })
+    })
+    $('#btn-song-detail-get-song').click(function (){
+        var valueSingerId = $("#value-singer-id").text();
+        var idPage = parseInt($(this).attr("data-page"));
+        alert(valueSingerId + " " + idPage)
+        $.ajax({
+            url : "/api/user/v1/songdetail/loadmoresongs",
+            type : 'get',
+            data : {
+                idPage : idPage + 1,
+                idSinger : valueSingerId,
+            },
+            success : function (value){
+                // alert(value)
+                $("#data-song-in-song-detail-page").append(value);
+                $("#btn-song-detail-get-song").attr("data-page",idPage + 1);
+            }
+        })
+    })
+
 });

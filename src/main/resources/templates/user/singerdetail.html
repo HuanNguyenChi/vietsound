@@ -166,46 +166,6 @@
 <!-- Active js -->
 <script th:src="@{/js/active.js}"></script>
 <script th:src="@{/js/customjs.js}"></script>
-<script>
-  $(document).ready(function (){
-    $('#btn-singer-detail-get-song').click(function (){
-      var valueSingerId = $("#value-singer-id-in-singer-detail").text();
-      var idPage = parseInt($(this).attr("data-page"));
-      alert(valueSingerId + " " + idPage)
-      $.ajax({
-        url : "/api/user/v1/singerdetail/loadmoresongs",
-        type : 'get',
-        data : {
-          idPage : idPage + 1,
-          idSinger : valueSingerId,
-        },
-        success : function (value){
-          // alert(value)
-          $("#data-song-in-singer-detail-page").append(value);
-          $("#btn-singer-detail-get-song").attr("data-page",idPage + 1);
-        }
-      })
-    })
-    $('#btn-singer-detail-get-album').click(function (){
-      var valueSingerId = $("#value-singer-id-in-singer-detail").text();
-      var idPage = parseInt($(this).attr("data-page"));
-      alert(valueSingerId + " " + idPage)
-      $.ajax({
-        url : "/api/user/v1/singerdetail/loadmorealbums",
-        type : 'get',
-        data : {
-          idPage : idPage + 1,
-          idSinger : valueSingerId,
-        },
-        success : function (value){
-          // alert(value)
-          $("#data-album-in-singer-detail-page").append(value);
-          $("#btn-singer-detail-get-album").attr("data-page",idPage + 1);
-        }
-      })
-    })
-  })
-</script>
 </body>
 
 </html>

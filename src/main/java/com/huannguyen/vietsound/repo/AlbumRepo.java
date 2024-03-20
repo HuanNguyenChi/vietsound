@@ -1,6 +1,7 @@
 package com.huannguyen.vietsound.repo;
 
 import com.huannguyen.vietsound.entity.Album;
+import com.huannguyen.vietsound.entity.Category;
 import com.huannguyen.vietsound.entity.Singer;
 import com.huannguyen.vietsound.entity.Song;
 import org.springframework.data.domain.Pageable;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.Cache;
 import java.util.List;
 
 @Repository
@@ -20,4 +22,6 @@ public interface AlbumRepo extends JpaRepository<Album,Integer> {
     void deleteById(int id);
     @Query(value = "select a from Album  a where a.singerOfAlbum = :singer")
     List<Album> findAlbumsBySingerOfAlbum(Singer singer);
+    @Query(value = "select a from Album a where a.categoryOfAlbum = :category")
+    List<Album> findAlbumsByCategoryOfAlbum(Category category);
 }

@@ -79,7 +79,7 @@ public class HomeController {
     @GetMapping("/tophit")
     public String tophit(Model model){
         List<Album> albumList = albumService.findAlbumsLimit(0,6);
-        List<Category> categoryList = categoryService.findAll();
+        List<Category> categoryList = categoryService.findCategoriesLimit(0,12);
         List<Song> songList = songService.findSongsLimit(0,12);
 
         model.addAttribute("songList",songList);

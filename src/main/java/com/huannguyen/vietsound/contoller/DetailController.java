@@ -30,75 +30,84 @@ public class DetailController {
     private UserService userService;
 
     @GetMapping("/song/{id}")
-    public String getSongById(Model model, @PathVariable("id") int id){
+    public String getSongById(Model model, @PathVariable("id") int id) {
         Song song = songService.findById(id);
         List<Category> categoryList = categoryService.findAll();
         List<Album> albumList = new ArrayList<>();
         List<Song> songList = new ArrayList<>();
-        if(albumService.findAlbumsBySingerOfAlbumLimit(song.getSingerOfSong(),0,8).size() > 0){
-            albumList = albumService.findAlbumsBySingerOfAlbumLimit(song.getSingerOfSong(),0,8);
+        if (albumService.findAlbumsBySingerOfAlbumLimit(song.getSingerOfSong(), 0, 8).size() > 0) {
+            albumList = albumService.findAlbumsBySingerOfAlbumLimit(song.getSingerOfSong(), 0, 8);
         }
-        if(songService.findSongsBySingerOfSongLimit(song.getSingerOfSong(),0,8).size() > 0){
-            songList = songService.findSongsBySingerOfSongLimit(song.getSingerOfSong(),0,8);
+        if (songService.findSongsBySingerOfSongLimit(song.getSingerOfSong(), 0, 8).size() > 0) {
+            songList = songService.findSongsBySingerOfSongLimit(song.getSingerOfSong(), 0, 8);
         }
 
-        model.addAttribute("categoryList",categoryList);
-        model.addAttribute("song",song);
-        model.addAttribute("singer",song.getSingerOfSong());
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("song", song);
+        model.addAttribute("singer", song.getSingerOfSong());
         song.setListens(song.getListens() + 1);
-        model.addAttribute("albumList",albumList);
-        model.addAttribute("songOfSinger",songList);
+        model.addAttribute("albumList", albumList);
+        model.addAttribute("songOfSinger", songList);
         songService.save(song);
         return "user/songdetail";
     }
+
     @GetMapping("/singer/{id}")
-    public String getSingerById(Model model, @PathVariable("id") int id){
+    public String getSingerById(Model model, @PathVariable("id") int id) {
         Singer singer = singerService.findById(id);
-        List<Category> categoryList = categoryService.findAll();
+
         List<Song> songList = new ArrayList<>();
         List<Album> albumList = new ArrayList<>();
-
-        model.addAttribute("categoryList",categoryList);
-        model.addAttribute("singer",singer);
-        if(songService.findSongsBySingerOfSongLimit(singer,0,8).size() > 0) {
-            songList = songService.findSongsBySingerOfSongLimit(singer,0,8);
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("singer", singer);
+        if (songService.findSongsBySingerOfSongLimit(singer, 0, 8).size() > 0) {
+            songList = songService.findSongsBySingerOfSongLimit(singer, 0, 8);
         }
-        if(albumService.findAlbumsBySingerOfAlbumLimit(singer,0,8).size() > 0){
-            albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer,0,8);
+        if (albumService.findAlbumsBySingerOfAlbumLimit(singer, 0, 8).size() > 0) {
+            albumList = albumService.findAlbumsBySingerOfAlbumLimit(singer, 0, 8);
         }
-        model.addAttribute("songOfSinger",songList);
-        model.addAttribute("albumList",albumList);
+        model.addAttribute("songOfSinger", songList);
+        model.addAttribute("albumList", albumList);
         return "user/singerdetail";
     }
+
     @GetMapping("/album/{id}")
-    public String getAlbumById(Model model, @PathVariable("id") int id){
+    public String getAlbumById(Model model, @PathVariable("id") int id) {
         Album album = albumService.findById(id);
         List<Category> categoryList = categoryService.findAll();
         List<Song> songList = new ArrayList<>();
         List<Album> albumDiff = new ArrayList<>();
-        if(album.getSongInAlbum().size() != 0){
-            songList = album.getSongInAlbum();
+        if (album.getSongInAlbum().size() != 0) {
+            songList = songService.findSongsByAlbumLimit(album, 0, 8);
         }
-        if(album.getSingerOfAlbum().getAlbumList().size() != 0){
-            albumDiff = album.getSingerOfAlbum().getAlbumList();
+        if (album.getSingerOfAlbum().getAlbumList().size() != 0) {
+            albumDiff = albumService.findAlbumsBySingerOfAlbumLimit(album.getSingerOfAlbum(), 0, 4);
         }
-        model.addAttribute("categoryList",categoryList);
-        model.addAttribute("songList",songList);
-        model.addAttribute("singer",album.getSingerOfAlbum());
-        model.addAttribute("albumDiff",albumDiff);
-
+        model.addAttribute("categoryList", categoryList);
+        model.addAttribute("songList", songList);
+        model.addAttribute("singer", album.getSingerOfAlbum());
+        model.addAttribute("albumDiff", albumDiff);
+        model.addAttribute("album", album);
         return "user/albumdetail";
     }
+
     @GetMapping("/category/{id}")
-    public String getCategoryById(Model model, @PathVariable("id") int id){
+    public String getCategoryById(Model model, @PathVariable("id") int id) {
         Category category = categoryService.findById(id);
-//        Singer singer = singerService.findById(song.getSingerInSong().get(0).getId());
-//        List<Song> songOfSinger = singer.getSongOfSinger();
-//        List<Album> albumList = albumService.findBySingerOfAlbum(singer);
-        model.addAttribute("category",category);
-        model.addAttribute("songList",category.getSongInCategory());
-//        model.addAttribute("singerOfCategory",category.get);
-        model.addAttribute("albumInCategory",category.getAlbumInCategory());
+        List<Category> categoryList = categoryService.findAll();
+        model.addAttribute("categoryList", categoryList);
+        List<Song> songList = new ArrayList<>();
+        if (category.getSongInCategory().size() > 0) {
+            songList = songService.findSongsByCategoryOfSongLimit(category, 0, 8);
+        }
+        List<Album> albumList = new ArrayList<>();
+        if (category.getAlbumInCategory().size() > 0) {
+            albumList = albumService.findAlbumsByCategoryOfAlbum(category, 0, 8);
+        }
+        model.addAttribute("category", category);
+        model.addAttribute("songList", songList);
+        model.addAttribute("albumInCategory", albumList);
         return "user/categorydetail";
     }
 }
