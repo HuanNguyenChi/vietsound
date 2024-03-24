@@ -276,18 +276,74 @@ public class APIController {
     public String getSingerLimitPaging(@RequestParam int page){
         List<Singer> singerList = singerService.findSingersLimit(page-1,10);
         String res = "";
+        for(Singer singer : singerList){
+            res +=
+                    "                                <tr>\n" +
+                    "                                    <td id=\"data-id-singer\" value=\""+singer.getId()+"\">"+singer.getId()+"</td>\n" +
+                    "                                    <td>"+ singer.getName()+"</td>\n" +
+                    "                                    <td>"+ singer.getStageName()+"</td>\n" +
+                    "                                    <td>" + singer.getDebut()+"</td>\n" +
+                    "                                    <td style=\"padding-right: 0px; margin-right: 0px\">\n" +
+                    "                                        <a href=\"/admin/updatesingerdetail/"+singer.getId()+"\">\n" +
+                    "                                            <span class=\" btn btn-success\" >Edit</span>\n" +
+                    "                                        </a>\n" +
+                    "                                        <span type=\"button\" class=\"btn-delete-singer\">\n" +
+                    "                                            <span class=\"btn btn-danger\" style=\"margin-left: 10px;\">Delete</span>\n" +
+                    "                                        </span>\n" +
+                    "                                    </td>\n" +
+                    "                                </tr>\n" ;
+
+        }
         return res;
     }
     @GetMapping("/getcategorylimitpaging")
     public String getCategoryLimitPaging(@RequestParam int page){
         List<Category> categoryList = categoryService.findCategoriesLimit(page-1,10);
         String res = "";
+        for(Category category: categoryList){
+            res +=
+                    "                                <tr>\n" +
+                    "                                    <td value=\""+category.getId()+"\" class=\"data-id-category\">"+category.getId()+"</td>\n" +
+                    "                                    <td>"+category.getName()+"</td>\n" +
+                    "\n" +
+                    "                                    <td>"+category.getPopularity()+"</td>\n" +
+                    "                                    <td>"+category.getDescription().substring(0,50)+"</td>\n" +
+                    "                                    <td style=\"padding-right: 0px; margin-right: 0px\">\n" +
+                    "                                        <a href=\"/admin/updatecategorydetail/"+category.getId()+"\">\n" +
+                    "                                            <span class=\" btn btn-success\" >Edit</span>\n" +
+                    "                                        </a>\n" +
+                    "                                        <span type=\"button\" class=\"btn-delete-category\">\n" +
+                    "                                            <span class=\"btn btn-danger\" style=\"margin-left: 10px;\">Delete</span>\n" +
+                    "                                        </span>\n" +
+                    "                                    </td>\n" +
+                    "                                </tr>\n" ;
+
+        }
         return res;
     }
     @GetMapping("/getalbumlimitpaging")
     public String getAlbumLimitPaging(@RequestParam int page){
         List<Album> albumList = albumService.findAlbumsLimit(page-1,10);
         String res = "";
+        for(Album album : albumList){
+            res +=
+                    "                                    <tr>\n" +
+                    "                                        <td value=\""+album.getId()+"\" class=\"data-id-album\">"+album.getId()+"</td>\n" +
+                    "                                        <td >"+album.getName()+"</td>\n" +
+                    "                                        <td >"+album.getDatePublic()+"</td>\n" +
+                    "                                        <td >"+album.getLikes()+"</td>\n" +
+                    "                                        <td >"+album.getDislikes()+"</td>\n" +
+                    "                                        <td style=\"padding-right: 0px; margin-right: 0px\">\n" +
+                    "                                            <a href=\"/admin/updatealbumdetail/" + album.getId()+">\n" +
+                    "                                                <span class=\" btn btn-success\" >Edit</span>\n" +
+                    "                                            </a>\n" +
+                    "                                            <span type=\"button\" class=\"btn-delete-album\">\n" +
+                    "                                                <span class=\"btn btn-danger\" style=\"margin-left: 10px;\">Delete</span>\n" +
+                    "                                            </span>\n" +
+                    "                                        </td>\n" +
+                    "                                    </tr>\n" ;
+
+        }
         return res;
     }
 

@@ -42,7 +42,7 @@
             <h2>Update Album Here</h2>
             <p>Please fill all</p>
             <div class="login-form">
-                <form th:action="'/admin/updatealbumdetail/' + ${album.getId()}" method="put" enctype="multipart/form-data">
+                <form th:action="'/admin/updatealbumdetail/' + ${album.getId()}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="inputNameOfAlbum"><strong>Name of Album</strong></label>
                         <input type="text" class="form-control" id="inputNameOfAlbum" th:value="${album.getName()}" name="name">
@@ -50,7 +50,7 @@
 
                     <div class="form-group">
                         <label for="inputDatePublicOfAlbum"><strong></strong>Date Public of Album</label>
-                        <input type="text" class="form-control" id="inputDatePublicOfAlbum" th:value="${album.getDatePublic()}" name="datePublic">
+                        <input type="text" class="form-control" id="inputDatePublicOfAlbum" th:value="${album.getDatePublic()}" name="datepublic">
                     </div>
 
                     <div class="form-group">

@@ -43,10 +43,10 @@
             <h2>Add New Song Here</h2>
             <p>Please fill all</p>
             <div class="login-form">
-                <form th:action="'/admin/updatealbumdetail/' + ${category.getId()}" method="put" enctype="multipart/form-data">
+                <form th:action="'/admin/updatecategorydetail/' + ${category.getId()}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="inputNameOfCategory"><strong>Name of Category</strong></label>
-                        <input type="text" class="form-control" id="inputNameOfCategory" th:value="${category.getName()}" th:text="${category.getName()}" name="name">
+                        <input type="text" class="form-control" id="inputNameOfCategory" th:value="${category.getName()}" name="name">
                     </div>
 
                     <div class="form-group">
@@ -57,7 +57,7 @@
 
                     <div class="form-group">
                         <label for="inputPopularityOfCategory"><strong>Popularity</strong></label>
-                        <input type="text" class="form-control" id="inputPopularityOfCategory" th:text="${category.getPopularity()}" th:value="${category.getPopularity()}" name="popularity">
+                        <input type="text" class="form-control" id="inputPopularityOfCategory" th:value="${category.getPopularity()}" name="popularity">
                     </div>
 
                     <div class="form-group">

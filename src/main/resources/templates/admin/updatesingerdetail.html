@@ -42,15 +42,15 @@
             <h2>Add New Song Here</h2>
             <p>Please fill all</p>
             <div class="login-form">
-                <form th:action="'/admin/updatesingerdetail/' + ${singer.getId()}" method="put" enctype="multipart/form-data">
+                <form th:action="'/admin/updatesingerdetail/' + ${singer.getId()}" method="post"  enctype="multipart/form-data">
                     <div class="form-group">
                         <label for="inputNameOfSinger"><strong>Name of Singer</strong></label>
-                        <input type="text" class="form-control" id="inputNameOfSinger" th:value="${singer.getName()}" th:value="${singer.getName()}" name="name">
+                        <input type="text" class="form-control" id="inputNameOfSinger"  th:value="${singer.getName()}" name="name">
                     </div>
 
                     <div class="form-group">
                         <label for="inputStageNameOfSinger"><strong></strong>Stage Name</label>
-                        <input type="text" class="form-control" id="inputStageNameOfSinger" th:value="${singer.getStageName()}" th:text="${singer.getStageName()}" name="stageName">
+                        <input type="text" class="form-control" id="inputStageNameOfSinger" th:value="${singer.getStageName()}" name="stagename">
                     </div>
 
                     <div class="form-group">
@@ -60,7 +60,7 @@
 
                     <div class="form-group">
                         <label for="inputDebutOfSinger"><strong></strong>Date Debut</label>
-                        <input type="text" class="form-control" id="inputDebutOfSinger" th:value="${singer.getDebut()}" th:text="${singer.getDebut()}" name="debut">
+                        <input type="text" class="form-control" id="inputDebutOfSinger" th:value="${singer.getDebut()}"  name="debut">
                     </div>
 
                     <div class="form-group">

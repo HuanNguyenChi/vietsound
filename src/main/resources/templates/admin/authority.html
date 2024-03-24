@@ -130,7 +130,7 @@
             var isChecked = $(this).prop('checked');
             // Thực hiện các hành động bạn muốn khi checkbox được nhấp
             $.ajax({
-                url : "/api/admin/updateroleforuser",
+                url : "/api/admin/v1/updateroleforuser",
                 type : "post",
                 data : {
                     id : id,
