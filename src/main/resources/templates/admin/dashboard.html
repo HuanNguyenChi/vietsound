@@ -49,7 +49,7 @@
                         </div>
                         <!-- Single Artist -->
                         <div th:each="singer : ${singerListLimit}" class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms" >
-                            <a th:href="'/admin/singer/' + ${singer.getId()}">
+                            <a th:href="'/admin/updatesingerdetail/' + ${singer.getId()}">
                                 <div class="thumbnail" style="display: inline-block">
                                     <img th:src="'/img/bg-img/' + ${singer.getImage()}" alt="">
                                 </div>
@@ -69,7 +69,7 @@
                         </div>
                         <!-- Single Album -->
                         <div th:each="album : ${albumListLimit}" class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms" >
-                            <a th:href="'/admin/album/' + ${album.getId()}">
+                            <a th:href="'/admin/updatealbumdetail/' + ${album.getId()}">
                                 <div class="thumbnail" style="display: inline-block">
                                     <img th:src="'/img/bg-img/' + ${album.getImage()}" alt="">
                                 </div>
@@ -90,7 +90,7 @@
                         </div>
                         <!-- Single Category -->
                         <div th:each="category : ${categoryListLimit}" class="single-artists d-flex align-items-center wow fadeInUp" data-wow-delay="100ms" >
-                            <a th:href="'/admin/category/' + ${category.getId()}">
+                            <a th:href="'/admin/updatecategorydetail/' + ${category.getId()}">
                                 <div class="thumbnail" style="display: inline-block">
                                     <img th:src="'/img/bg-img/' + ${category.getImage()}" alt="">
                                 </div>

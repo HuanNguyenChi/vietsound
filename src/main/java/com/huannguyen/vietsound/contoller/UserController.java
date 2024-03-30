@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,39 +20,42 @@ public class UserController {
     @Autowired
     private CategoryService categoryService;
     @GetMapping("/{username}")
-    public String getUser(Model model, @PathVariable("username") String username){
+    public String getUser(Model model, @PathVariable("username") String username, Principal principal){
         User user = userService.findByUsername(username);
-        model.addAttribute("user",user);
-        List<Category> categoryList = categoryService.findAll();
-        model.addAttribute("categoryList",categoryList);
-        try {
-            List<Song> songList = new ArrayList<>();
-            List<Singer> singerList = new ArrayList<>();
-            List<Album> albumList = new ArrayList<>();
-            List<Category> categoryList1 = new ArrayList<>();
-            if(user.getSongLike().size() > 0){
-                songList = userService.findSongLimitFromUser(0,5,username);
-            }
-            if(user.getSingerList().size() > 0) {
-                singerList = userService.findSingerLimitFromUser(0,6,username);
-            }
-            if(user.getAlbumList().size() > 0){
-                albumList = userService.findAlbumLimitFromUser(0,6,username);
-            }
-            if(user.getCategoryLikeList().size() > 0){
-                categoryList1 = userService.findCategoryLimitFromUser(0,6,username);
-            }
+        String userLogin = principal.getName();
+        if(userLogin.equals(user.getUsername())){
+            model.addAttribute("user",user);
+            List<Category> categoryList = categoryService.findAll();
+            model.addAttribute("categoryList",categoryList);
+            try {
+                List<Song> songList = new ArrayList<>();
+                List<Singer> singerList = new ArrayList<>();
+                List<Album> albumList = new ArrayList<>();
+                List<Category> categoryList1 = new ArrayList<>();
+                if(user.getSongLike().size() > 0){
+                    songList = userService.findSongLimitFromUser(0,5,username);
+                }
+                if(user.getSingerList().size() > 0) {
+                    singerList = userService.findSingerLimitFromUser(0,6,username);
+                }
+                if(user.getAlbumList().size() > 0){
+                    albumList = userService.findAlbumLimitFromUser(0,6,username);
+                }
+                if(user.getCategoryLikeList().size() > 0){
+                    categoryList1 = userService.findCategoryLimitFromUser(0,6,username);
+                }
 
 
-            model.addAttribute("songList",songList);
-            model.addAttribute("categoryList1",categoryList1);
-            model.addAttribute("singerList",singerList);
-            model.addAttribute("albumList",albumList);
-        }catch (Exception e){
-            e.printStackTrace();
+                model.addAttribute("songList",songList);
+                model.addAttribute("categoryList1",categoryList1);
+                model.addAttribute("singerList",singerList);
+                model.addAttribute("albumList",albumList);
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            return "user/userhome";
         }
-
-        return "user/userhome";
+        return "login/login";
     }
 
     @GetMapping("/updateinfo/{username}")
